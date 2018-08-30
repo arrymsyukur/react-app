@@ -1,0 +1,744 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 8, 2018, 11:57:01 AM
+    Author     : rulyardiansyah
+*/
+/* ARRANGE THE STYLSHEET ALPHABETICALLY */
+/* =============================================
+DAKSA DESIGN REPO - SUPPORTS - COLORS
+============================================= */
+/* PRIMARY COLORS */
+/* SECONDARY COLORS */
+/* NEUTRAL COLORS */
+/* ADIWISISTA COLORS */
+/* RESETTER */
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+  font-family: "OrionSans", sans-serif;
+  font-size: 15px; }
+.ui-widget .ui-icon {
+  background-image: url("../img/icon-spritesheet.png"); }
+
+.ui-helper-hidden {
+  display: none; }
+
+/* ACCORDION */
+.ui-accordion .ui-accordion-header {
+  background: rgba(117, 138, 154, 0.12);
+  font-family: "OrionSans", sans-serif;
+  font-size: 10pt;
+  text-shadow: none;
+  text-transform: uppercase;
+  padding: 10px 24px 10px 44px;
+  box-shadow: none;
+  transition: all .2s ease-out; }
+  .ui-accordion .ui-accordion-header.ui-state-hover, .ui-accordion .ui-accordion-header.ui-state-active {
+    background: rgba(41, 171, 226, 0.24); }
+.ui-accordion .ui-accordion-content {
+  padding: 24px; }
+
+/* AUTOCOMPLETE */
+.ui-autocomplete {
+  position: relative;
+  width: 100%; }
+  .ui-autocomplete .ui-autocomplete-input {
+    margin-bottom: 0;
+    color: #758a9a;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: 0 1px 0 rgba(162, 205, 58, 0.24);
+    font-family: "OrionSans", sans-serif;
+    font-size: 14px;
+    padding: 6px; }
+    .ui-autocomplete .ui-autocomplete-input.ui-state-hover, .ui-autocomplete .ui-autocomplete-input.ui-state-focus {
+      box-shadow: 0 1px 0 #a2cd3a; }
+  .ui-autocomplete .ui-autocomplete-dropdown.ui-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 8px 10px;
+    width: auto;
+    background: #f0f0f0;
+    box-shadow: inset 0 1px 0 white;
+    border-radius: 0 3px 3px 0;
+    margin-right: 0; }
+    .ui-autocomplete .ui-autocomplete-dropdown.ui-button .ui-icon {
+      display: block; }
+    .ui-autocomplete .ui-autocomplete-dropdown.ui-button .ui-button-text {
+      display: none; }
+
+.ui-autocomplete-panel {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border: none; }
+  .ui-autocomplete-panel .ui-autocomplete-items {
+    padding: 0;
+    margin: 0; }
+  .ui-autocomplete-panel .ui-autocomplete-item {
+    padding: 4px 12px;
+    font-family: "OrionSans", sans-serif;
+    font-size: 15px;
+    transition: all .2s ease-out; }
+    .ui-autocomplete-panel .ui-autocomplete-item.ui-state-highlight {
+      background: #A2CD3A;
+      text-shadow: none;
+      border-radius: 0;
+      box-shadow: none; }
+
+/* BUTTON */
+.ui-button.ui-state-default {
+  background: #A2CD3A;
+  line-height: 100%;
+  padding: 8px 36px 10px;
+  margin-left: 75px;
+  min-width: auto;
+  margin: 0;
+  border: none;
+  border-radius: 4px;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.16);
+  transition: all .2s ease-out; }
+.ui-button.ui-state-hover, .ui-button.ui-state-focus {
+  background: #97c131; }
+.ui-button .ui-button-text {
+  font-family: "OrionSans", sans-serif;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: normal;
+  padding: 0;
+  line-height: 100%;
+  text-shadow: none;
+  text-transform: uppercase; }
+.ui-button.alt {
+  background-color: #758a9a; }
+.ui-button.as-if-link {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block; }
+  .ui-button.as-if-link .ui-button-text {
+    color: #A2CD3A;
+    text-transform: none; }
+  .ui-button.as-if-link.ui-state-hover .ui-button-text {
+    color: #597B06; }
+
+/* CHECKBOX */
+.ui-chkbox .ui-chkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(117, 138, 154, 0.48);
+  background: #ffffff;
+  box-shadow: none;
+  border-radius: 3px; }
+  .ui-chkbox .ui-chkbox-box.ui-state-hover, .ui-chkbox .ui-chkbox-box.ui-state-active {
+    border-color: #A2CD3A; }
+  .ui-chkbox .ui-chkbox-box .ui-chkbox-icon.ui-icon {
+    transition: none;
+    display: block; }
+.ui-chkbox label {
+  display: inline-block;
+  width: auto; }
+
+/* COMMANDLINK */
+.ui-commandlink {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 4px;
+  vertical-align: bottom;
+  margin-right: 12px; }
+  .ui-commandlink:hover, .ui-commandlink:focus {
+    border-color: #A2CD3A;
+    background: transparent; }
+  .ui-commandlink.icon-only {
+    width: 26px;
+    height: 26px; }
+
+/* DATATABLE */
+.ui-datatable .ui-paginator {
+  border: none;
+  background: transparent;
+  font-family: "OrionSans", sans-serif;
+  font-size: 12px;
+  color: #758a9a;
+  padding: 8px 24px 10px; }
+  .ui-datatable .ui-paginator.ui-paginator-top {
+    border-top: 1px solid rgba(0, 0, 0, 0.04); }
+  .ui-datatable .ui-paginator a, .ui-datatable .ui-paginator label, .ui-datatable .ui-paginator select, .ui-datatable .ui-paginator span {
+    font-family: "OrionSans", sans-serif;
+    font-size: 11px;
+    text-shadow: none;
+    color: #758a9a;
+    margin: auto;
+    vertical-align: top; }
+  .ui-datatable .ui-paginator a, .ui-datatable .ui-paginator select {
+    padding: 4px 2px;
+    background: rgba(192, 192, 192, 0.24);
+    border: none;
+    border-radius: 2px;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.24);
+    min-width: 24px;
+    min-height: 20px; }
+  .ui-datatable .ui-paginator a {
+    margin-left: 1px;
+    margin-right: 1px; }
+    .ui-datatable .ui-paginator a.ui-state-disabled, .ui-datatable .ui-paginator a.ui-state-active {
+      opacity: .35; }
+    .ui-datatable .ui-paginator a > span {
+      position: relative;
+      top: -2px;
+      margin: 0; }
+  .ui-datatable .ui-paginator .ui-paginator-current {
+    margin-top: 4px; }
+  .ui-datatable .ui-paginator .ui-paginator-pages {
+    padding: 0 6px; }
+  .ui-datatable .ui-paginator .ui-paginator-rpp-label, .ui-datatable .ui-paginator .ui-paginator-rpp-options {
+    display: inline-block; }
+  .ui-datatable .ui-paginator .ui-paginator-rpp-label {
+    width: auto;
+    margin-left: 18px;
+    margin-right: 6px;
+    vertical-align: bottom;
+    margin-bottom: 4px; }
+  .ui-datatable .ui-paginator .ui-paginator-rpp-options {
+    width: 44px;
+    height: 20px; }
+.ui-datatable .ui-datatable-header {
+  font-family: "OrionSans", sans-serif;
+  font-size: 16px;
+  color: #758a9a;
+  text-shadow: none;
+  border: none;
+  padding: 12px 24px;
+  background: #f0f0f0;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08); }
+.ui-datatable table {
+  margin-bottom: 8px; }
+  .ui-datatable table thead th, .ui-datatable table thead th.ui-state-default {
+    font-family: "OrionSans", sans-serif;
+    font-size: 14px;
+    background: #f0f0f0;
+    border: none;
+    color: #758a9a;
+    text-shadow: none;
+    padding: 12px 16px;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12); }
+    .ui-datatable table thead th.ui-state-hover, .ui-datatable table thead th.ui-state-default.ui-state-hover {
+      box-shadow: none; }
+    .ui-datatable table thead th .ui-column-filter, .ui-datatable table thead th.ui-state-default .ui-column-filter {
+      background: #ffffff;
+      border-radius: 2px;
+      box-shadow: none;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      font-size: 11px;
+      width: 100%;
+      margin: 4px auto 0; }
+      .ui-datatable table thead th .ui-column-filter.ui-state-hover, .ui-datatable table thead th .ui-column-filter.ui-state-focus, .ui-datatable table thead th.ui-state-default .ui-column-filter.ui-state-hover, .ui-datatable table thead th.ui-state-default .ui-column-filter.ui-state-focus {
+        box-shadow: none;
+        border-color: #A2CD3A; }
+    .ui-datatable table thead th .ui-selectonemenu, .ui-datatable table thead th.ui-state-default .ui-selectonemenu {
+      font-size: 12px; }
+  .ui-datatable table tbody {
+    border: none; }
+    .ui-datatable table tbody tr, .ui-datatable table tbody td {
+      border: none;
+      background: transparent; }
+    .ui-datatable table tbody tr {
+      transition: none; }
+      .ui-datatable table tbody tr.ui-state-highlight {
+        background: rgba(162, 205, 58, 0.08);
+        border: none;
+        box-shadow: inset 0 -1px 0 rgba(162, 205, 58, 0.48); }
+        .ui-datatable table tbody tr.ui-state-highlight td {
+          text-shadow: none; }
+    .ui-datatable table tbody td {
+      font-family: "OrionSans", sans-serif;
+      font-size: 13px;
+      color: #758a9a;
+      padding: 16px 12px;
+      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08); }
+      .ui-datatable table tbody td.align-center {
+        text-align: center; }
+      .ui-datatable table tbody td.align-right {
+        text-align: right; }
+.ui-datatable .ui-row-toggler {
+  width: 12px;
+  height: 12px;
+  background: url("../img/icon-arrow.svg") no-repeat;
+  background-size: 100%;
+  transition: all .2s ease-out; }
+  .ui-datatable .ui-row-toggler[aria-expanded="true"] {
+    transform: rotate(0deg); }
+  .ui-datatable .ui-row-toggler[aria-expanded="false"] {
+    transform: rotate(-90deg); }
+.ui-datatable .ui-helper-hidden {
+  display: none; }
+
+.has-toggler > .ui-datatable-tablewrapper > table > thead th:first-child {
+  width: 40px; }
+
+.has-action-on-last-column > .ui-datatable-tablewrapper > table > thead th:last-child {
+  width: 96px; }
+.has-action-on-last-column > .ui-datatable-tablewrapper > table > tbody td:last-child {
+  text-align: center; }
+  .has-action-on-last-column > .ui-datatable-tablewrapper > table > tbody td:last-child a:last-child {
+    margin-right: 0; }
+
+.has-a-lot-of-data > .ui-datatable-tablewrapper > table {
+  min-width: 1600px; }
+
+/* DATEPICKER */
+.ui-datepicker {
+  padding: 0;
+  border: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+  width: 200px; }
+  .ui-datepicker .ui-datepicker-header {
+    padding: 6px 12px 8px;
+    background: #A2CD3A;
+    border: none;
+    border-radius: 4px 4px 0 0; }
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+      width: 24px;
+      height: 24px;
+      transition: none; }
+      .ui-datepicker .ui-datepicker-header .ui-datepicker-prev.ui-state-hover, .ui-datepicker .ui-datepicker-header .ui-datepicker-next.ui-state-hover {
+        background: transparent;
+        box-shadow: none; }
+      .ui-datepicker .ui-datepicker-header .ui-datepicker-prev .ui-icon, .ui-datepicker .ui-datepicker-header .ui-datepicker-next .ui-icon {
+        background-image: url("../img/icon-arrow.svg");
+        background-position: center; }
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-prev.ui-state-hover {
+      top: 2px;
+      left: 2px; }
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-prev .ui-icon {
+      transform: rotate(90deg); }
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-next.ui-state-hover {
+      top: 2px;
+      right: 2px; }
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-next .ui-icon {
+      transform: rotate(-90deg); }
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+      line-height: 100%;
+      margin: 0 12px; }
+      .ui-datepicker .ui-datepicker-header .ui-datepicker-title span {
+        font-family: "OrionSans", sans-serif;
+        color: #ffffff;
+        font-size: 14px;
+        text-shadow: none;
+        line-height: 100%; }
+      .ui-datepicker .ui-datepicker-header .ui-datepicker-title select.ui-datepicker-month, .ui-datepicker .ui-datepicker-header .ui-datepicker-title select.ui-datepicker-year {
+        background: #ffffff;
+        font-size: 11px;
+        height: auto;
+        margin-left: 2px;
+        margin-right: 2px; }
+  .ui-datepicker .ui-datepicker-calendar tr:hover {
+    background: transparent; }
+  .ui-datepicker .ui-datepicker-calendar th, .ui-datepicker .ui-datepicker-calendar td {
+    font-family: "OrionSans", sans-serif;
+    font-size: 12px;
+    color: #758a9a;
+    text-shadow: none; }
+  .ui-datepicker .ui-datepicker-calendar td.ui-datepicker-week-end {
+    color: #feb033; }
+  .ui-datepicker .ui-datepicker-calendar td.ui-datepicker-current-day {
+    border-radius: 2px; }
+    .ui-datepicker .ui-datepicker-calendar td.ui-datepicker-current-day .ui-state-default {
+      background: #758a9a;
+      border-radius: 2px; }
+  .ui-datepicker .ui-datepicker-calendar td a.ui-state-default {
+    color: #758a9a;
+    padding: 6px 4px;
+    box-shadow: none;
+    text-shadow: none;
+    text-align: center; }
+  .ui-datepicker .ui-datepicker-calendar td a.ui-state-highlight {
+    background: #758a9a;
+    color: #ffffff;
+    text-shadow: none;
+    border-radius: 2px; }
+  .ui-datepicker .ui-datepicker-calendar td a.ui-state-hover {
+    background: #A2CD3A;
+    color: #ffffff;
+    text-shadow: none;
+    border-radius: 2px; }
+
+/* DIALOG */
+.ui-dialog {
+  min-width: 360px;
+  max-width: 640px;
+  border: #29ABE2;
+  border-radius: 8px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: #f0f0f0;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24); }
+  .ui-dialog .ui-dialog-titlebar {
+    padding: 12px 24px;
+    background: transparent;
+    text-transform: uppercase;
+    margin: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04); }
+    .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+      font-family: "PFHandbookPro-Bold", sans-serif;
+      color: #758a9a;
+      font-size: 20px; }
+  .ui-dialog .ui-dialog-titlebar-icon.ui-state-hover {
+    background: transparent;
+    border-color: #758a9a;
+    box-shadow: none; }
+  .ui-dialog .ui-dialog-content {
+    position: relative;
+    padding: 0;
+    max-height: 360px;
+    overflow: auto; }
+    .ui-dialog .ui-dialog-content .ui-icon {
+      display: none; }
+    .ui-dialog .ui-dialog-content .ui-confirm-dialog-message {
+      font-family: "OrionSans", sans-serif;
+      font-size: 15px;
+      color: #758a9a;
+      padding: 12px 24px; }
+    .ui-dialog .ui-dialog-content p {
+      margin-bottom: 12px; }
+    .ui-dialog .ui-dialog-content .dialog-body {
+      padding: 24px 24px 72px; }
+    .ui-dialog .ui-dialog-content .dialog-footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.04);
+      padding: 16px 24px; }
+      .ui-dialog .ui-dialog-content .dialog-footer button {
+        display: inline-block;
+        margin-right: 12px; }
+  .ui-dialog .ui-dialog-footer {
+    border: none;
+    padding: 12px 24px;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.04); }
+    .ui-dialog .ui-dialog-footer button {
+      margin-right: 12px; }
+  .ui-dialog form {
+    margin-top: 0;
+    margin-bottom: 0; }
+
+/* GROWL */
+.ui-growl {
+  width: auto; }
+  .ui-growl .ui-growl-item-container {
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+    background: rgba(255, 255, 255, 0.92);
+    padding: 10px 16px 10px; }
+    .ui-growl .ui-growl-item-container .ui-growl-item {
+      padding: 0;
+      margin: 0; }
+    .ui-growl .ui-growl-item-container .ui-growl-image {
+      display: none;
+      width: 0;
+      height: 0;
+      margin: 0; }
+    .ui-growl .ui-growl-item-container .ui-growl-message {
+      width: auto;
+      padding: 0;
+      margin-right: 12px; }
+      .ui-growl .ui-growl-item-container .ui-growl-message .ui-growl-title, .ui-growl .ui-growl-item-container .ui-growl-message p {
+        font-family: "OrionSans", sans-serif;
+        text-shadow: none;
+        color: #758a9a; }
+      .ui-growl .ui-growl-item-container .ui-growl-message .ui-growl-title {
+        display: none; }
+      .ui-growl .ui-growl-item-container .ui-growl-message p {
+        line-height: 140%; }
+  .ui-growl.ui-growl-error .ui-growl-message p {
+    color: #f15b00; }
+  .ui-growl.ui-growl-info .ui-growl-message p {
+    color: #29ABE2; }
+  .ui-growl.ui-growl-warn .ui-growl-message p {
+    color: #f15b00; }
+
+/* INPUTTEXT */
+.ui-inputtext, .ui-inputfield, .ui-inputtext.ui-inputfield {
+  margin-bottom: 0;
+  color: #758a9a;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: 0 1px 0 rgba(162, 205, 58, 0.24);
+  font-family: "OrionSans", sans-serif;
+  font-size: 15px;
+  padding: 6px; }
+  .ui-inputtext.ui-state-hover, .ui-inputtext.ui-state-focus, .ui-inputfield.ui-state-hover, .ui-inputfield.ui-state-focus, .ui-inputtext.ui-inputfield.ui-state-hover, .ui-inputtext.ui-inputfield.ui-state-focus {
+    box-shadow: 0 1px 0 #a2cd3a; }
+  .ui-inputtext.with-icon, .ui-inputfield.with-icon, .ui-inputtext.ui-inputfield.with-icon {
+    padding-left: 32px; }
+
+.ui-widget .ui-inputfield.hasDatepicker {
+  font-size: 15px; }
+
+/* MESSAGE */
+.ui-message.ui-message-info, .ui-message.ui-message-warn, .ui-message.ui-message-error, .ui-message.ui-message-fatal {
+  margin: 8px auto;
+  padding: 8px 12px; }
+.ui-message.ui-message-info {
+  background: rgba(41, 171, 226, 0.12);
+  border: 1px solid rgba(41, 171, 226, 0.48); }
+  .ui-message.ui-message-info .ui-message-info-detail {
+    color: #29ABE2; }
+.ui-message.ui-message-warn {
+  background: rgba(254, 176, 51, 0.12);
+  border: 1px solid rgba(254, 176, 51, 0.48); }
+  .ui-message.ui-message-warn .ui-message-warn-detail {
+    color: #feb033; }
+.ui-message.ui-message-error, .ui-message.ui-message-fatal {
+  background: rgba(241, 91, 0, 0.12);
+  border: 1px solid rgba(241, 91, 0, 0.48); }
+  .ui-message.ui-message-error .ui-message-error-detail, .ui-message.ui-message-error .ui-message-fatal-detail, .ui-message.ui-message-fatal .ui-message-error-detail, .ui-message.ui-message-fatal .ui-message-fatal-detail {
+    color: #f15b00; }
+.ui-message .ui-message-info-icon, .ui-message .ui-message-warn-icon, .ui-message .ui-message-error-icon, .ui-message .ui-message-fatal-icon {
+  display: none; }
+.ui-message .ui-message-info-detail, .ui-message .ui-message-warn-detail, .ui-message .ui-message-error-detail, .ui-message .ui-message-fatal-detail {
+  margin: 0;
+  font-family: "OrionSans", sans-serif;
+  font-size: 13px; }
+
+/* LINK */
+.ui-link {
+  font-family: "OrionSans", sans-serif; }
+
+/* MESSAGES */
+.ui-messages {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10; }
+  .ui-messages .ui-messages-info, .ui-messages .ui-messages-error, .ui-messages .ui-messages-warn {
+    padding: 12px 16px 16px;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24); }
+  .ui-messages .ui-messages-info {
+    background: rgba(255, 255, 255, 0.92); }
+    .ui-messages .ui-messages-info .ui-messages-info-icon {
+      display: none; }
+    .ui-messages .ui-messages-info .ui-messages-info-summary {
+      color: #29ABE2; }
+    .ui-messages .ui-messages-info .ui-messages-info-detail {
+      color: #758a9a; }
+  .ui-messages .ui-messages-error {
+    background: rgba(241, 91, 0, 0.92); }
+    .ui-messages .ui-messages-error .ui-messages-error-icon {
+      display: none; }
+    .ui-messages .ui-messages-error .ui-messages-error-summary {
+      color: #ffffff; }
+    .ui-messages .ui-messages-error .ui-messages-error-detail {
+      color: #ffffff; }
+  .ui-messages .ui-messages-warn {
+    background: rgba(241, 91, 0, 0.92); }
+    .ui-messages .ui-messages-warn .ui-messages-warn-icon {
+      display: none; }
+    .ui-messages .ui-messages-warn .ui-messages-warn-summary {
+      color: #ffffff; }
+    .ui-messages .ui-messages-warn .ui-messages-warn-detail {
+      color: #ffffff; }
+  .ui-messages ul {
+    margin: 0;
+    padding: 0; }
+    .ui-messages ul li {
+      margin: 0;
+      padding: 0; }
+      .ui-messages ul li span {
+        font-family: "OrionSans", sans-serif;
+        display: block;
+        margin: 0; }
+        .ui-messages ul li span:first-child {
+          font-size: 14px;
+          margin-bottom: 6px; }
+        .ui-messages ul li span:last-child {
+          font-size: 12px; }
+
+/* OUTPUTLABEL */
+.ui-outputlabel, .ui-outputlabel.ui-widget {
+  font-family: "OrionSans", sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: left; }
+  .ui-outputlabel.ui-state-error, .ui-outputlabel.ui-widget.ui-state-error {
+    background: transparent;
+    color: #f15b00; }
+
+/* PANEL */
+.ui-panel {
+  border: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+  border-radius: 3px;
+  padding: 0; }
+  .ui-panel .ui-panel-titlebar {
+    padding: 12px 24px;
+    background: #f9f9f9;
+    border: none;
+    border-radius: 3px 3px 0 0; }
+    .ui-panel .ui-panel-titlebar .ui-panel-title {
+      font-family: "OrionSans", sans-serif;
+      text-shadow: none;
+      color: #758a9a;
+      font-size: 1rem;
+      margin: 0; }
+  .ui-panel .ui-panel-content {
+    padding: 12px 24px 24px; }
+
+/* PROGRESS BAR */
+.ui-progressbar {
+  border: 1px solid #758a9a;
+  height: 8px; }
+  .ui-progressbar .ui-progressbar-value {
+    background: #758a9a;
+    box-shadow: none; }
+  .ui-progressbar .ui-progressbar-label {
+    font-family: "OrionSans", sans-serif;
+    color: #ffffff; }
+
+/* SELECTONEMENU */
+.ui-selectonemenu.ui-widget {
+  font-family: "OrionSans", sasn-serif;
+  font-size: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  transition: all .2s ease-out; }
+  .ui-selectonemenu.ui-widget.ui-state-hover, .ui-selectonemenu.ui-widget.ui-state-focus {
+    box-shadow: none;
+    background: #ffffff;
+    border-color: #A2CD3A;
+    box-shadow: none; }
+  .ui-selectonemenu.ui-widget label.ui-selectonemenu-label {
+    margin-bottom: 0;
+    box-shadow: none;
+    font-size: 15px; }
+  .ui-selectonemenu.ui-widget .ui-selectonemenu-trigger {
+    background: #f0f0f0;
+    border: none; }
+    .ui-selectonemenu.ui-widget .ui-selectonemenu-trigger.ui-state-hover, .ui-selectonemenu.ui-widget .ui-selectonemenu-trigger.ui-state-focus {
+      box-shadow: none; }
+
+.ui-selectonemenu-panel {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.24);
+  border: none; }
+  .ui-selectonemenu-panel .ui-selectonemenu-items {
+    padding: 0; }
+    .ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item {
+      font-family: "OrionSans", sans-serif;
+      font-size: 15px;
+      color: #758a9a;
+      padding: 6px 16px;
+      line-height: 100%;
+      transition: all .2s ease-out; }
+      .ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-state-highlight, .ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-state-hover {
+        background: #A2CD3A;
+        color: #ffffff;
+        text-shadow: none;
+        box-shadow: none; }
+
+form.stacked-form .ui-selectonemenu {
+  display: block;
+  width: 100%; }
+
+/* SELECTMANYCHECKBOX */
+.ui-selectmanycheckbox {
+  margin-bottom: 0; }
+  .ui-selectmanycheckbox .ui-chkbox {
+    margin-right: 12px; }
+    .ui-selectmanycheckbox .ui-chkbox + label {
+      display: inline-block;
+      width: auto;
+      margin: 0; }
+  .ui-selectmanycheckbox.ui-widget td {
+    padding: 4px 0 6px; }
+
+/* TABS */
+.ui-tabs {
+  border: none;
+  padding: 0;
+  background: transparent; }
+  .ui-tabs.ui-tabs-top .ui-tabs-nav, .ui-tabs.ui-tabs-bottom .ui-tabs-nav, .ui-tabs.ui-tabs-left .ui-tabs-nav, .ui-tabs.ui-tabs-right .ui-tabs-nav {
+    padding: 0;
+    background: transparent; }
+  .ui-tabs .ui-tabs-nav {
+    padding: 0; }
+    .ui-tabs .ui-tabs-nav .ui-tabs-header {
+      border: none;
+      background: transparent; }
+      .ui-tabs .ui-tabs-nav .ui-tabs-header.ui-tabs-selected {
+        border: none; }
+        .ui-tabs .ui-tabs-nav .ui-tabs-header.ui-tabs-selected a {
+          background: #f0f0f0;
+          color: #758a9a;
+          opacity: 1; }
+          .ui-tabs .ui-tabs-nav .ui-tabs-header.ui-tabs-selected a:hover {
+            background: #f0f0f0; }
+      .ui-tabs .ui-tabs-nav .ui-tabs-header.ui-state-hover {
+        box-shadow: none; }
+      .ui-tabs .ui-tabs-nav .ui-tabs-header a {
+        font-family: "OrionSans", sans-serif;
+        font-size: 15px;
+        color: #758a9a;
+        text-shadow: none;
+        padding: 12px 24px 8px;
+        background: #A2CD3A;
+        color: #ffffff;
+        border-radius: 4px 4px 0 0;
+        opacity: .48; }
+        .ui-tabs .ui-tabs-nav .ui-tabs-header a:hover {
+          background: #97c131;
+          opacity: 1; }
+  .ui-tabs .ui-tabs-panels {
+    box-shadow: inset 0 3px 0 #f0f0f0;
+    padding: 20px 24px 24px; }
+  .ui-tabs .ui-tabs-panel {
+    padding: 0; }
+
+/* WIZARD */
+.ui-wizard .ui-wizard-step-titles {
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 24px; }
+  .ui-wizard .ui-wizard-step-titles .ui-wizard-step-title {
+    float: none;
+    font-family: "OrionSans", sans-serif;
+    font-size: 15px;
+    text-shadow: none;
+    color: #758a9a;
+    border: 1px solid #758a9a;
+    border-radius: 50em;
+    background: transparent;
+    box-shadow: none;
+    padding: 6px 16px 8px;
+    line-height: 100%;
+    margin: 0 4px;
+    width: auto;
+    display: inline-block;
+    opacity: .24; }
+    .ui-wizard .ui-wizard-step-titles .ui-wizard-step-title.ui-state-highlight {
+      border-color: #A2CD3A;
+      color: #A2CD3A;
+      opacity: 1; }
+.ui-wizard .ui-wixard-content {
+  margin: 0; }
+.ui-wizard .ui-wizard-navbar {
+  margin: 12px 0 24px; }
+  .ui-wizard .ui-wizard-navbar .ui-wizard-nav-back .ui-icon, .ui-wizard .ui-wizard-navbar .ui-wizard-nav-next .ui-icon {
+    display: none; }
+  .ui-wizard .ui-wizard-navbar .ui-wizard-nav-back {
+    background-color: #758a9a; }
+  .ui-wizard .ui-wizard-navbar .ui-wizard-nav-next {
+    background-color: #758a9a; }
+
+/*# sourceMappingURL=override-primefaces.css.map */

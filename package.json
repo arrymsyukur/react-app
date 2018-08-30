@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "dateformat": "^3.0.3",
     "react": "^16.4.2",
+    "react-dialog": "^1.0.2",
     "react-dom": "^16.4.2",
+    "react-native-md5": "^1.0.0",
     "react-scripts": "1.1.5"
   },
   "main": "src/electron-starter.js",
