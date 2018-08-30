@@ -42,7 +42,7 @@ class App extends React.Component {
         <body>
           <form >
             <div className="form-group">
-              <label>Url :</label> <input className="ui-inputtext" value={this.state.url} onChange={this.handleChange} type="text" name="url" style={{ width: 1000 }} />
+              <label>Url :</label> <input className="ui-inputtext" value={this.state.url} onChange={this.handleChange} type="text" name="url" style={{ width: "85%" }} />
               <button className="ui-button" type="button" onClick={this.showConnectionDialog.bind(this)}>Setup Connection</button>
             </div>
             <div className="stacked-form">
@@ -63,20 +63,25 @@ class App extends React.Component {
                   <option value="application/octet-stream">Application/Octet-Stream</option>
                 </select>
               </div>
-              <hr className="invisible-form-group-separator" />
               <div className="form-group">
-                <label>Request :</label>  <textarea className="ui-inputfield" value={this.state.data} onChange={this.handleChange} name="data" rows="10" cols="25" />
+                <div id="tableParam"></div>
+                <button onClick={this.showParamDialog.bind(this)}>Add Param</button>
+              </div>
+              <div className="form-group">
+                <label>Request :</label>  <textarea className="ui-inputfield" value={this.state.data} onChange={this.handleChange} name="data" style={{ width: "95%", height: 250 }} />
               </div>
             </div>
-            <button onClick={this.showParamDialog.bind(this)}>Add Param</button>
+
           </form>
           {
             this.state.isConnectionDialog &&
             <Dialog
-              className="ui-dialog"
-              draggable="true"
               title="Connection Setup"
-              modal={true}
+              width={500}
+              height={550}
+              isDraggable={true}
+              isResizeable={true}
+              hasCloseIcon={true}
               onClose={this.closeConnectionDialog}
               buttons={
                 [{
@@ -84,23 +89,29 @@ class App extends React.Component {
                   onClick: () => this.closeConnectionDialog()
                 }]
               }>
-              <div className="ui-dialog-title" value="Connection Setup" />
-
-              <div className="ui-dialog-content">
-                <div className="form-group">
-                  Base URL :  <input type="text" name="baseUrl" /><br></br>
-                  Canonical Path :  <input type="text" name="canonicalPath" /><br></br>
-                  Authentication Type :
-                  <select id="authType" name="authType" onChange={this.handleChange}>
-                    <option value="DA01">DA01</option>
-                    <option value="BASIC">BASIC</option>
-                    <option value="CUSTOM">CUSTOM</option>
-                  </select><br></br>
-                  <div id="authField">
-                    Username :  <input type="text" name="username" onChange={this.handleChange} /><br></br>
-                    Password :  <input type="password" name="password" onChange={this.handleChange} /><br></br>
-                  </div>
-                </div>
+              <div className="form-group">
+                <label>Base URL :</label>
+                <input type="text" name="baseUrl" style={{ width: "100%" }} />
+              </div>
+              <div className="form-group">
+                <label>Canonical Path :</label>
+                <input type="text" name="canonicalPath" style={{ width: "100%" }} />
+              </div>
+              <div className="form-group">
+                <label>Authentication Type :</label>
+                <select id="authType" name="authType" onChange={this.handleChange}>
+                  <option value="DA01">DA01</option>
+                  <option value="BASIC">BASIC</option>
+                  <option value="CUSTOM">CUSTOM</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Username :</label>
+                <input type="text" name="username" onChange={this.handleChange} style={{ width: "100%" }} />
+              </div>
+              <div className="form-group">
+                <label>Password :</label>
+                <input type="password" name="password" onChange={this.handleChange} style={{ width: "100%" }} />
               </div>
             </Dialog>
           }
