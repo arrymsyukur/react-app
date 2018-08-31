@@ -2,8 +2,7 @@
  * Created by Iwan Supratman on 20/10/2017.
  */
 
-import md5 from "react-native-md5";
-
+var md5 = require('js-md5');
 var CryptoJS = require("crypto-js");
 // import Constants from './Constant'
 
@@ -16,7 +15,7 @@ class DA01Signature {
         if (method == "POST" || method == "PUT") {
 
             if (data != "") {
-                var hex_md5v = md5.hex_md5(data);
+                var hex_md5v = md5.hex(data);
                 dataPlain += hex_md5v;
                 dataPlain += "\n";
             }

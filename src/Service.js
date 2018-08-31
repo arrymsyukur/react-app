@@ -9,9 +9,9 @@ class Service {
     constructor() {
     }
 
-    request = async (onSuccess, onFailure, methods, params) => {
+    request = async (onSuccess, onFailure, params) => {
         var res = {};
-        var username = "ärry";
+        var username = params.username;
         let dateNow = await dateFormat(now, "ddd, d mmm yyyy HH:mm:ss Z");
         let signature = await da01.generateSignature(params.method, params.data, params.contentType, dateNow, params.canonicalPath);
         let authorization = await 'DA01' + ' ' + username + ':' + signature;
@@ -40,11 +40,6 @@ class Service {
 
             console.log("Path", path);
         }
-        // let useSessionId = params.useSessionId
-        // if (useSessionId) {
-        //     console.log("sessionId", UserPreferences.sessionId);
-        //     headers['Session-Id'] = UserPreferences.sessionId
-        // }
 
         options.headers = headers
 
@@ -87,23 +82,23 @@ class Service {
                 let content = await response.json();
                 console.log("Body", content);
                 console.log(response.json)
-                return onSuccess(methods, rCode, content)
+                return onSuccess( rCode, content)
             }
             else {
                 let message = await response._bodyText
                 console.log('message error: ', message);
-                return onFailure(methods, rCode, message)
+                return onFailure( rCode, message)
             }
         }
         catch (e) {
             console.log('error')
             console.log(e);
-            return onFailure(methods, '06', e);
+            return onFailure( '06', e);
         }
     }
 
     _getUrlStringWithPath(path) {
-        
+
         var baseURL = "";
         return `${baseURL}${path}`;
     }
