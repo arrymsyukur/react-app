@@ -44,8 +44,7 @@ class Service {
         options.headers = headers
 
         console.log(headers)
-        let url = this._getUrlStringWithPath(path)
-
+        let url = params.url;
         console.log("========================= REQUEST =========================");
         console.log("URL", url);
         console.log("Path", path);
@@ -82,26 +81,21 @@ class Service {
                 let content = await response.json();
                 console.log("Body", content);
                 console.log(response.json)
-                return onSuccess( rCode, content)
+                return onSuccess(rCode, content)
             }
             else {
                 let message = await response._bodyText
                 console.log('message error: ', message);
-                return onFailure( rCode, message)
+                return onFailure(rCode, message)
             }
         }
         catch (e) {
             console.log('error')
             console.log(e);
-            return onFailure( '06', e);
+            return onFailure('06', e);
         }
     }
 
-    _getUrlStringWithPath(path) {
-
-        var baseURL = "";
-        return `${baseURL}${path}`;
-    }
 
     sendRequest = async (url, options) => {
         let response = await fetch(url, options)

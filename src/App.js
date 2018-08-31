@@ -68,11 +68,22 @@ class App extends React.Component {
       method: this.state.method,
       useAuth: true,
       data: JSON.stringify(this.state.data),
-      canonicalPath: this.state.canonicalPath
+      canonicalPath: this.state.canonicalPath,
+      url: this.state.baseUrl + this.state.canonicalPath,
+      username: this.state.username,
+      password: this.state.password
     }
     Service.request(this.onSuccess, this.onFailure, params);
   }
-
+  formatJson = () => {
+    try {
+      this.setState({
+        data: JSON.stringify(JSON.parse(this.state.data), null, 2)
+      });
+    } catch (error) {
+      alert("Wrong Json Format");
+    }
+  }
   render() {
     return (
       <div className="App">
@@ -89,14 +100,14 @@ class App extends React.Component {
           <div className="stacked-form">
             <div className="form-group">
               <label id="icon-content" >Method</label>
-              <select id="method" name="method" value={this.state.method} onChange={this.handleChange} style={{margin_left:32}}>
+              <select id="method" name="method" value={this.state.method} onChange={this.handleChange} style={{ margin_left: 32 }}>
                 <option value="POST">POST</option>
                 <option value="GET">GET</option>
                 <option value="PUT">PUT</option>
                 <option value="DELETE">DELETE</option>
               </select><br></br>
               <label>Accept Type </label>
-              <input type="text" name="acceptType" style={{ width: "50%" }} />
+              <input type="text" name="acceptType" onChange={this.handleChange} style={{ width: "50%" }} />
             </div>
             <div className="form-group">
               <label id="icon-content">Content-Type</label>
@@ -108,13 +119,14 @@ class App extends React.Component {
             </div>
             <div className="form-group">
               <div id="tableParam"> </div>
-              <button onClick={this.showParamDialog.bind(this)}>Add Param</button>
+              <button type="button" onClick={this.showParamDialog.bind(this)}>Add Param</button>
             </div>
             <div className="form-group">
               <label>Request </label>  <textarea className="ui-inputfield" value={this.state.data} onChange={this.handleChange} name="data" style={{ width: "95%", height: 250 }} />
+              <button onClick={this.formatJson.bind(this)} type="button">Format Json</button>
             </div>
             <hr className="invisible-form-group-separator" />
-            <button onClick={this.sendRequest()} className="ui-button" type="button" >SEND</button>
+            <button onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
           </div>
         </form>
         {
@@ -135,11 +147,11 @@ class App extends React.Component {
             }>
             <div className="form-group">
               <label>Base URL :</label>
-              <input type="text" name="baseUrl" style={{ width: "100%" }} />
+              <input type="text" name="baseUrl" onChange={this.handleChange} style={{ width: "100%" }} />
             </div>
             <div className="form-group">
               <label>Canonical Path :</label>
-              <input type="text" name="canonicalPath" style={{ width: "100%" }} />
+              <input type="text" name="canonicalPath" onChange={this.handleChange} style={{ width: "100%" }} />
             </div>
             <div className="form-group">
               <label>Authentication Type :</label>
@@ -172,7 +184,8 @@ class App extends React.Component {
               }, {
                 text: "Close",
                 onClick: () => this.closeParamDialog()
-              }]
+              }
+              ]
             }>
             <div className="form-group">
               <label>Name :</label>
