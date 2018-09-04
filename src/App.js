@@ -8,6 +8,7 @@ import Service from './Service.js';
 import urlParam from './TableParam.js';
 import Dialog from 'react-dialog';
 import TableParam from './TableParam.js';
+import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class App extends React.Component {
       isConnectionDialog: false,
       isParamDialog: false,
       responseHeader: [],
-      authType:'DA01'
+      authType: 'DA01'
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -96,41 +97,53 @@ class App extends React.Component {
         </header>
 
         <form >
-          <div className="form-group">
-            <label>Url </label> <input className="ui-inputtext" value={this.state.url} onChange={this.handleChange} type="text" name="url" style={{ width: "85%" }} />
-            <button className="ui-button" type="button" onClick={this.showConnectionDialog.bind(this)}>Setup Connection</button>
-          </div>
-          <div className="stacked-form">
-            <div className="form-group">
-              <label id="icon-content" >Method</label>
-              <select id="method" name="method" value={this.state.method} onChange={this.handleChange} style={{ margin_left: 32 }}>
-                <option value="POST">POST</option>
-                <option value="GET">GET</option>
-                <option value="PUT">PUT</option>
-                <option value="DELETE">DELETE</option>
-              </select><br></br>
-              <label>Accept Type </label>
-              <input type="text" name="acceptType" onChange={this.handleChange} style={{ width: "50%" }} />
-            </div>
-            <div className="form-group">
-              <label id="icon-content">Content-Type</label>
-              <select id="contentType" name="contentType" value={this.state.contentType} onChange={this.handleChange}>
-                <option value="application/json">Application/Json</option>
-                <option value="application/pdf">Application/Pdf</option>
-                <option value="application/octet-stream">Application/Octet-Stream</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <div id="tableParam"> </div>
-              <button type="button" onClick={this.showParamDialog.bind(this)}>Add Param</button>
-            </div>
-            <div className="form-group">
-              <label>Request </label>  <textarea className="ui-inputfield" value={this.state.data} onChange={this.handleChange} name="data" style={{ width: "95%", height: 250 }} />
-              <button onClick={this.formatJson.bind(this)} type="button">Format Json</button>
-            </div>
-            <hr className="invisible-form-group-separator" />
-            <button onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
-          </div>
+          <Tabs>
+            <TabList>
+              <Tab>Request</Tab><Tab>Response</Tab>
+            </TabList>
+            <TabPanel>
+              <div className="form-group">
+                <label>Url </label> <input className="ui-inputtext" value={this.state.url} onChange={this.handleChange} type="text" name="url" style={{ width: "85%" }} />
+                <button className="ui-button" type="button" onClick={this.showConnectionDialog.bind(this)}>Setup Connection</button>
+              </div>
+              <div className="stacked-form">
+                <div className="form-group">
+                  <label id="icon-content" >Method</label>
+                  <select id="method" name="method" value={this.state.method} onChange={this.handleChange} style={{ margin_left: 32 }}>
+                    <option value="POST">POST</option>
+                    <option value="GET">GET</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                  </select><br></br>
+                  <label>Accept Type </label>
+                  <input type="text" name="acceptType" onChange={this.handleChange} style={{ width: "50%" }} />
+                </div>
+                <div className="form-group">
+                  <label id="icon-content">Content-Type</label>
+                  <select id="contentType" name="contentType" value={this.state.contentType} onChange={this.handleChange}>
+                    <option value="application/json">Application/Json</option>
+                    <option value="application/pdf">Application/Pdf</option>
+                    <option value="application/octet-stream">Application/Octet-Stream</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <div id="tableParam"> </div>
+                  <button type="button" onClick={this.showParamDialog.bind(this)}>Add Param</button>
+                </div>
+                <div className="form-group">
+                  <label>Request </label>  <textarea className="ui-inputfield" value={this.state.data} onChange={this.handleChange} name="data" style={{ width: "95%", height: 250 }} />
+                  <button onClick={this.formatJson.bind(this)} type="button">Format Json</button>
+                </div>
+                <hr className="invisible-form-group-separator" />
+                <button onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
+              </div>
+            </TabPanel>
+            <TabPanel>
+              Response tab
+            </TabPanel>
+
+          </Tabs>
+
         </form>
         {
           this.state.isConnectionDialog &&

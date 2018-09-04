@@ -13,7 +13,8 @@
     "react-dialog": "^1.0.2",
     "react-dom": "^16.4.2",
     "react-native-md5": "^1.0.0",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "react-tabs": "^2.3.0"
   },
   "main": "src/electron-starter.js",
   "scripts": {
