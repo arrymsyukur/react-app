@@ -17,7 +17,8 @@ class App extends React.Component {
       method: 'POST',
       isConnectionDialog: false,
       isParamDialog: false,
-      responseHeader: []
+      responseHeader: [],
+      authType:'DA01'
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -33,22 +34,23 @@ class App extends React.Component {
     TableParam.addParam(this.state.paramName, this.state.paramValue);
   }
   showConnectionDialog = () => { this.setState({ isConnectionDialog: true }) }
-  closeConnectionDialog = () => { this.setState({ isConnectionDialog: false }) }
+  closeConnectionDialog = () => { this.setState({ isConnectionDialog: false, url: this.state.baseUrl + this.state.canonicalPath }) }
   showParamDialog = () => { this.setState({ isParamDialog: true }) }
   closeParamDialog = () => { this.setState({ isParamDialog: false }) }
   onSuccess = (responseCode, json) => {
 
-    this.setState({
-      name: json.data[0].name,
-      phone: json.data[0].phoneNumber,
-      balance: json.data[0].qvaBalance,
-      luckyDraw: json.data[0].coupons,
-      point: json.data[0].points,
-      email: json.data[0].email,
-      birthPlace: json.data[0].birthPlace,
-      birthDate: json.data[0].birthDate,
-      address: json.data[0].address,
-    });
+    console.log(JSON.stringify(json));
+    // this.setState({
+    //   name: json.data[0].name,
+    //   phone: json.data[0].phoneNumber,
+    //   balance: json.data[0].qvaBalance,
+    //   luckyDraw: json.data[0].coupons,
+    //   point: json.data[0].points,
+    //   email: json.data[0].email,
+    //   birthPlace: json.data[0].birthPlace,
+    //   birthDate: json.data[0].birthDate,
+    //   address: json.data[0].address,
+    // });
 
   }
 
@@ -71,7 +73,8 @@ class App extends React.Component {
       canonicalPath: this.state.canonicalPath,
       url: this.state.baseUrl + this.state.canonicalPath,
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      authType: this.state.authType
     }
     Service.request(this.onSuccess, this.onFailure, params);
   }
@@ -147,15 +150,15 @@ class App extends React.Component {
             }>
             <div className="form-group">
               <label>Base URL :</label>
-              <input type="text" name="baseUrl" onChange={this.handleChange} style={{ width: "100%" }} />
+              <input type="text" name="baseUrl" value={this.state.baseUrl} onChange={this.handleChange} style={{ width: "100%" }} />
             </div>
             <div className="form-group">
               <label>Canonical Path :</label>
-              <input type="text" name="canonicalPath" onChange={this.handleChange} style={{ width: "100%" }} />
+              <input type="text" name="canonicalPath" value={this.state.canonicalPath} onChange={this.handleChange} style={{ width: "100%" }} />
             </div>
             <div className="form-group">
               <label>Authentication Type :</label>
-              <select id="authType" name="authType" onChange={this.handleChange}>
+              <select id="authType" name="authType" value={this.state.authType} onChange={this.handleChange}>
                 <option value="DA01">DA01</option>
                 <option value="BASIC">BASIC</option>
                 <option value="CUSTOM">CUSTOM</option>
@@ -163,7 +166,7 @@ class App extends React.Component {
             </div>
             <div className="form-group">
               <label>Username :</label>
-              <input type="text" name="username" onChange={this.handleChange} style={{ width: "100%" }} />
+              <input type="text" name="username" onChange={this.handleChange} value={this.state.username} style={{ width: "100%" }} />
             </div>
             <div className="form-group">
               <label>Password :</label>

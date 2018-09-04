@@ -32,7 +32,7 @@ class DA01Signature {
         return dataPlain;
     }
 
-    generateSignature(method, data, contentType, date, canonicalPath) {
+    async generateSignature(method, data, contentType, date, canonicalPath, password) {
         /*console.log("method", method);
         console.log("data", data);
         console.log("contentType", contentType);
@@ -40,7 +40,6 @@ class DA01Signature {
         console.log("canonicalPath", canonicalPath);*/
 
         var string_to_sign = this.getString(method, data, contentType, date, canonicalPath);
-        var password = "1212";
         console.log("contenttttt", string_to_sign);
         let hash = CryptoJS.HmacSHA1(string_to_sign, password);
         // console.log("hash = ", hash.toString());        
@@ -52,4 +51,4 @@ class DA01Signature {
     }
 
 }
-export default new DA01Signature();
+export default new DA01Signature()

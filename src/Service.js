@@ -3,6 +3,7 @@ import query from 'query-string';
 import da01 from './DA01Signature';
 var now = new Date();
 var dateFormat = require('dateformat');
+const axios = require('axios');
 
 class Service {
 
@@ -10,23 +11,40 @@ class Service {
     }
 
     request = async (onSuccess, onFailure, params) => {
-        var res = {};
         var username = params.username;
         let dateNow = await dateFormat(now, "ddd, d mmm yyyy HH:mm:ss Z");
-        let signature = await da01.generateSignature(params.method, params.data, params.contentType, dateNow, params.canonicalPath);
-        let authorization = await 'DA01' + ' ' + username + ':' + signature;
+        let signature;
+        var authorization;
+        var headers;
+        if (params.authType === 'DA01') {
+            signature = await da01.generateSignature(params.method, params.data, params.contentType, dateNow, params.canonicalPath, params.password);
+            console.log('Masuk DA01');
+            authorization = await 'DA01' + ' ' + username + ':' + signature;
+            headers = {
+                'Authorization': authorization
+            }
+            console.log('DA01 : ', headers);
+        } else if (params.authType === 'BASIC') {
+            signature = await da01.generateSignature(params.method, params.data, params.contentType, dateNow, params.canonicalPath, params.password);
+            authorization = await 'BASIC' + ' ' + username + ':' + signature;
+            headers = {
+                'Authorization': authorization
+            }
+            console.log('BASIC : ', headers);
 
-        var options = await {
+        } else {
+            headers = {
+            };
+        }
+
+        var options = {
             timeout: 30 * 1000,
             method: params.method,
         };
-        var headers = {
-            'Date': dateNow,
-            'Authorization': authorization
-        }
+
 
         var path = params.canonicalPath
-        if (params.method == 'POST' || params.method == 'PUT') {
+        if (params.method === 'POST' || params.method === 'PUT') {
             headers['Content-Type'] = params.contentType
             headers['Accept-Encoding'] = params.contentType
             options.body = params.data;
@@ -41,7 +59,7 @@ class Service {
             console.log("Path", path);
         }
 
-        options.headers = headers
+        options.headers = headers;
 
         console.log(headers)
         let url = params.url;
@@ -49,10 +67,9 @@ class Service {
         console.log("URL", url);
         console.log("Path", path);
         console.log("Method", options.method);
-        console.log("Date", options.headers.Date);
-        console.log("Content-Type", options.headers['Content-Type']);
-        console.log("Authorization", options.headers.Authorization);
-        console.log("Body", options.body)
+        // console.log("Content-Type", options.headers['Content-Type']);
+        // console.log("Authorization", options.headers.Authorization);
+        // console.log("Body", options.body)
         console.log("=====================END OF REQUEST =========================");
 
         let response = await this.sendRequest(url, options)
@@ -70,13 +87,13 @@ class Service {
             let map = headers.map;
             console.log("Map", JSON.stringify(map));
 
-            let rCode = map.rc;
+            let rCode = response.headers.get('rc');
             console.log("Response Code", rCode);
 
-            let date = map.date;
+            let date = response.headers.get('date');
             console.log("Date", date);
 
-            if (status == 200) {
+            if (status === 200) {
 
                 let content = await response.json();
                 console.log("Body", content);
@@ -98,9 +115,23 @@ class Service {
 
 
     sendRequest = async (url, options) => {
-        let response = await fetch(url, options)
-        console.log('Response ', response)
-        return response
+        // let response = await fetch(url, options)
+        // console.log('Response ', response)
+        // return response
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open(options.method, url, true);
+        for (var key in options.headers) {
+            xhttp.setRequestHeader(key, options.headers[key]);
+        }
+
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                console.log('Response : ', this.response);
+                return (this.response);
+            }
+        }
+        xhttp.send(options.body);
     }
 
 
