@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {createRef} from 'react';
 import logo from './assets/img/logo.svg';
 import './assets/css/App.css';
 import './assets/css/main.css';
 import './assets/css/override-primefaces.css';
 import './assets/css/content-template-fixed-side-bar.css';
 import Service from './Service.js';
-import urlParam from './TableParam.js';
 import Dialog from 'react-dialog';
 import TableParam from './TableParam.js';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
@@ -21,6 +20,7 @@ class App extends React.Component {
       responseHeader: [],
       authType: 'DA01'
     }
+    this.urlParams = createRef();
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -30,9 +30,6 @@ class App extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-  }
-  addParam = () => {
-    TableParam.addParam(this.state.paramName, this.state.paramValue);
   }
   showConnectionDialog = () => { this.setState({ isConnectionDialog: true }) }
   closeConnectionDialog = () => { this.setState({ isConnectionDialog: false, url: this.state.baseUrl + this.state.canonicalPath }) }
@@ -55,7 +52,6 @@ class App extends React.Component {
 
   }
 
-
   onFailure = (responseCode, message) => {
     var msg = message
     if (msg == null) {
@@ -75,8 +71,10 @@ class App extends React.Component {
       url: this.state.baseUrl + this.state.canonicalPath,
       username: this.state.username,
       password: this.state.password,
-      authType: this.state.authType
+      authType: this.state.authType,
+      urlParameters: this.urlParams.current.getDataFromTable()
     }
+    console.log("Param : ", params);
     Service.request(this.onSuccess, this.onFailure, params);
   }
   formatJson = () => {
@@ -88,6 +86,7 @@ class App extends React.Component {
       alert("Wrong Json Format");
     }
   }
+
   render() {
     return (
       <div className="App">
@@ -127,8 +126,7 @@ class App extends React.Component {
                   </select>
                 </div>
                 <div className="form-group">
-                  <div id="tableParam"> </div>
-                  <button type="button" onClick={this.showParamDialog.bind(this)}>Add Param</button>
+                  <TableParam ref={this.urlParams} />
                 </div>
                 <div className="form-group">
                   <label>Request </label>  <textarea className="ui-inputfield" value={this.state.data} onChange={this.handleChange} name="data" style={{ width: "95%", height: 250 }} />

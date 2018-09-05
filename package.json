@@ -9,11 +9,13 @@
     "dateformat": "^3.0.3",
     "js-md5": "^0.7.3",
     "md5": "^2.2.1",
+    "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dialog": "^1.0.2",
     "react-dom": "^16.4.2",
     "react-native-md5": "^1.0.0",
     "react-scripts": "1.1.5",
+    "react-table": "^6.8.6",
     "react-tabs": "^2.3.0"
   },
   "main": "src/electron-starter.js",
