@@ -15,7 +15,7 @@ class DA01Signature {
         if (method == "POST" || method == "PUT") {
 
             if (data != "") {
-                var hex_md5v = md5.hex(data);
+                var hex_md5v = md5.hex(JSON.parse(data));
                 dataPlain += hex_md5v;
                 dataPlain += "\n";
             }

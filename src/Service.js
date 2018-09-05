@@ -50,7 +50,7 @@ class Service {
         var path = params.canonicalPath
         let url = params.url;
         if (params.method === 'POST' || params.method === 'PUT') {
-            headers['content-type'] = params.contentType
+            headers['Content-type'] = params.contentType
             options.body = params.data;
         } else {
             if (params.urlParameters != null) {
@@ -78,7 +78,7 @@ class Service {
         console.log("Method", options.method);
         // console.log("Content-Type", options.headers['Content-Type']);
         // console.log("Authorization", options.headers.Authorization);
-        console.log("Body", options.body)
+        console.log("Body", JSON.parse(options.body));
         console.log("=====================END OF REQUEST =========================");
         console.log("=====================SEND REQUEST =========================");
         try {
