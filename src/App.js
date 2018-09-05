@@ -37,18 +37,9 @@ class App extends React.Component {
   closeParamDialog = () => { this.setState({ isParamDialog: false }) }
   onSuccess = (responseCode, json) => {
 
-    console.log(JSON.stringify(json));
-    // this.setState({
-    //   name: json.data[0].name,
-    //   phone: json.data[0].phoneNumber,
-    //   balance: json.data[0].qvaBalance,
-    //   luckyDraw: json.data[0].coupons,
-    //   point: json.data[0].points,
-    //   email: json.data[0].email,
-    //   birthPlace: json.data[0].birthPlace,
-    //   birthDate: json.data[0].birthDate,
-    //   address: json.data[0].address,
-    // });
+    this.setState({
+      responseBody: JSON.stringify(JSON.parse(json), null, 2)
+    });
 
   }
 
@@ -136,22 +127,15 @@ class App extends React.Component {
                 <button onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
               </div>
             </TabPanel>
-            <TabPanel>
-              <div id="response-tab" className="tabContent">
-                <div className="form-group">
-                <label>Response Header :</label> <br />
-                <label>Status          :</label> <input type="text" id="responseHeaderStatus" disabled style={{ width: "200px" }} /><br />
-                <label>Date            :</label> <input type="text" id="responseHeaderDate" disabled style={{ width: "200px" }} /><br />
-                <label>Connection      :</label> <input type="text" id="responseHeaderConnection" disabled style={{ width: "200px" }} /><br />
-                <label>Content-Type    :</label> <input type="text" id="responseHeaderContentType" disabled style={{ width: "200px" }} /><br />
-                <label>Content-Length  :</label> <input type="text" id="responseHeaderContentLength" disabled style={{ width: "200px" }} /><br />
-                <label>Server          :</label> <input type="text" id="responseHeaderServer" disabled style={{ width: "200px" }} /><br />
-                <label>X-Powered-By    :</label> <input type="text" id="responseHeaderXPowered" disabled style={{ width: "200px" }} />
-                </div>
-                <div className="form-group">
-                  <label>Response : </label> <textarea id="respon" readonly style={{ width: "100%", height: 250 }}></textarea>
+            <TabPanel >
+              <div className="form-group">
+                <div id="tableResponseheader">
                 </div>
               </div>
+              <div className="form-group">
+                <label>Response  </label> <textarea className="ui-inputfield" value={this.state.responseBody} onChange={this.handleChange} name="responseBody" style={{ width: "95%", height: 250 }} />
+              </div>
+
             </TabPanel>
 
           </Tabs>
