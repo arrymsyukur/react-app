@@ -40,7 +40,11 @@ class Service {
 
             };
         }
-
+        if (params.headerParameters.length !== 0) {
+            params.headerParameters.map((key) => {
+                headers[key.name] = key.value;
+            })
+        }
         var options = {
             timeout: 30 * 1000,
             method: params.method,
@@ -97,20 +101,20 @@ class Service {
                 if (xhttp.readyState == 4 && xhttp.status == 200) {
                     console.log('Response : ', this.responseText);
                     console.log('Status : ', this.status);
-                    response = this.responseText;
+                    let content = this.response;
+                    let responseBody = this.responseText;
 
                     if (this.status === 200) {
-                        let content = response;
-                        console.log("Body", content);
-                        console.log(response.json)
+                        console.log("Response", content);
+                        console.log("Response Body", responseBody);
                         alert("Request Success")
-                        return onSuccess(status, content)
+                        return onSuccess(content, responseBody)
                     }
                     else {
-                        let message = response;
+                        let message = content;
                         console.log('message error: ', message);
                         alert("Request Failed")
-                        return onFailure(status, message)
+                        return onFailure(content, message)
                     }
 
                 }

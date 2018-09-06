@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import logo from './assets/img/logo.svg';
 import './assets/css/App.css';
 import './assets/css/main.css';
@@ -8,6 +8,7 @@ import Service from './Service.js';
 import Dialog from 'react-dialog';
 import TableParam from './TableParam.js';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
+import ReactTable from 'react-table';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,11 +18,17 @@ class App extends React.Component {
       method: 'POST',
       isConnectionDialog: false,
       isParamDialog: false,
+      isHeaderDialog: false,
       responseHeader: [],
-      authType: 'DA01'
+      authType: 'DA01',
+      dataHeader: [],
+      name: '',
+      value: ''
     }
-    this.urlParams = createRef();
+    this.urlParams = React.createRef();
+    this.headerParams = React.createRef();
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeHeader = this.handleChangeHeader.bind(this);
   }
 
   state = {};
@@ -35,10 +42,13 @@ class App extends React.Component {
   closeConnectionDialog = () => { this.setState({ isConnectionDialog: false, url: this.state.baseUrl + this.state.canonicalPath }) }
   showParamDialog = () => { this.setState({ isParamDialog: true }) }
   closeParamDialog = () => { this.setState({ isParamDialog: false }) }
-  onSuccess = (responseCode, json) => {
+  showHeaderDialog = () => { this.setState({ isHeaderDialog: true }) }
+  closeHeaderDialog = () => { this.setState({ isHeaderDialog: false }) }
+
+  onSuccess = (response, responseBody) => {
 
     this.setState({
-      responseBody: JSON.stringify(JSON.parse(json), null, 2)
+      responseBody: JSON.stringify(JSON.parse(responseBody), null, 2)
     });
 
   }
@@ -63,7 +73,9 @@ class App extends React.Component {
       username: this.state.username,
       password: this.state.password,
       authType: this.state.authType,
-      urlParameters: this.urlParams.current.getDataFromTable()
+      urlParameters: this.urlParams.current.getDataFromTable(),
+      headerParameters: this.getDataFromTableHeader()
+
     }
     console.log("Param : ", params);
     Service.request(this.onSuccess, this.onFailure, params);
@@ -77,8 +89,62 @@ class App extends React.Component {
       alert("Wrong Json Format");
     }
   }
+  handleChangeHeader = (e) => {
+    if (e.target.name === 'name') {
+      this.setState({
+        name: e.target.value
+      });
+    };
+    if (e.target.name === 'value') {
+      this.setState({
+        value: e.target.value
+      });
+    };
+  }
 
+  handleSubmit = (e) => {
+    if (this.state.name === "" || this.state.value === "") {
+      alert('Parameter tidak boleh kosong');
+    } else {
+      this.state.dataHeader.push({
+        name: this.state.name,
+        value: this.state.value
+      });
+      this.setState({ name: "", value: "" });
+      console.log('isi array : ', this.state.dataHeader);
+      e.preventDefault();
+    }
+  }
+
+  getDataFromTableHeader = () => {
+    var urlParamData = [];
+    this.state.dataHeader.map((obj) => {
+      if (obj.name !== "" || obj.value !== "") {
+        urlParamData.push(obj);
+      }
+      console.log("Data yg dikirim : ", urlParamData);
+    });
+    return urlParamData;
+  }
+  renderEditable = cellInfo => {
+    return (
+      <div
+        style={{ backgroundColor: "#fafafa" }}
+        contentEditable={true}
+        suppressContentEditableWarning={true}
+        onBlur={e => {
+          const dataHeader = [...this.state.dataHeader];
+          dataHeader[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+          this.setState({ dataHeader });
+        }}
+        dangerouslySetInnerHTML={
+          { __html: this.state.dataHeader[cellInfo.index][cellInfo.column.id] }
+        }
+      />
+    );
+  };
   render() {
+    const { dataHeader } = this.state;
     return (
       <div className="App">
         <header className="header">
@@ -95,6 +161,7 @@ class App extends React.Component {
               <div className="form-group">
                 <label>Url </label> <input className="ui-inputtext" value={this.state.url} onChange={this.handleChange} type="text" name="url" style={{ width: "85%" }} />
                 <button className="ui-button" type="button" onClick={this.showConnectionDialog.bind(this)}>Setup Connection</button>
+                <button className="ui-button" type="button" onClick={this.showHeaderDialog.bind(this)}>Add Header</button>
               </div>
               <div className="stacked-form">
                 <div className="form-group">
@@ -206,6 +273,64 @@ class App extends React.Component {
             <div className="form-group">
               <label>Value :</label>
               <input type="text" name="paramValue" onChange={this.handleChange} style={{ width: "100%" }} />
+            </div>
+          </Dialog>
+        }{
+          this.state.isHeaderDialog &&
+          <Dialog
+            title="Add Header Parameters"
+            modal={true}
+            width={750}
+            height={500}
+            isDraggable={true}
+            buttons={
+              [{
+                text: "Close",
+                onClick: () => this.closeHeaderDialog()
+              }
+              ]
+            }>
+            <div>
+              <div className='TableHeader'>
+                <p className='App-Intro'>
+                  <form onSubmit={this.handleSubmit}>
+                    <h4>Header Parameters</h4>
+                    <label>
+                      Name:
+                            <input type='text'
+                        name='name'
+                        value={this.state.name}
+                        onChange={this.handleChangeHeader} />
+                    </label>{" "}
+                    <label>
+                      Value:
+                            <input type='text'
+                        name='value'
+                        value={this.state.value}
+                        onChange={this.handleChangeHeader} />
+                    </label>
+                    <input type='submit' value='Add' />
+                  </form>
+                </p>
+                <div>
+                  <ReactTable
+                    data={dataHeader}
+                    columns={[
+                      {
+                        Header: 'Name',
+                        accessor: 'name',
+                        Cell: this.renderEditable
+                      },
+                      {
+                        Header: 'Value',
+                        accessor: 'value',
+                        Cell: this.renderEditable
+                      }
+                    ]}
+                    defaultPageSize={5}
+                  />
+                </div>
+              </div>
             </div>
           </Dialog>
         }
