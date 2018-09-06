@@ -90,7 +90,7 @@ DAKSA DESIGN REPO - SUPPORTS - COLORS
 
 /* BUTTON */
 .ui-button.ui-state-default {
-  background: #A2CD3A;
+  background: #29ABE2;
   line-height: 100%;
   padding: 8px 36px 10px;
   margin-left: 75px;
@@ -101,7 +101,7 @@ DAKSA DESIGN REPO - SUPPORTS - COLORS
   box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.16);
   transition: all .2s ease-out; }
 .ui-button.ui-state-hover, .ui-button.ui-state-focus {
-  background: #97c131; }
+  background: #29ABE2; }
 .ui-button .ui-button-text {
   font-family: "OrionSans", sans-serif;
   color: #ffffff;
@@ -120,10 +120,10 @@ DAKSA DESIGN REPO - SUPPORTS - COLORS
   margin: 0;
   display: inline-block; }
   .ui-button.as-if-link .ui-button-text {
-    color: #A2CD3A;
+    color: #29ABE2;
     text-transform: none; }
   .ui-button.as-if-link.ui-state-hover .ui-button-text {
-    color: #597B06; }
+    color: #29ABE2; }
 
 /* CHECKBOX */
 .ui-chkbox .ui-chkbox-box {

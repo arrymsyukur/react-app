@@ -43,14 +43,14 @@ p, label, h1, h2, h3, h4, h5, h6 {
   color: #758a9a; }
 
 button {
-  background: #A2CD3A;
+  background: #29ABE2;
   color: #ffffff;
   font-size: 13px;
   line-height: 100%;
   padding: 12px 36px;
   min-width: 200px; }
   button:hover, button:focus {
-    background: #97c131; }
+    background: #29ABE2; }
 
 p, label {
   font-family: "OrionSans", sans-serif;

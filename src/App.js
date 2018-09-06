@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './assets/img/logo.svg';
+import logo from './assets/img/logo-daksa.svg';
 import './assets/css/App.css';
 import './assets/css/main.css';
 import './assets/css/override-primefaces.css';
@@ -8,6 +8,7 @@ import Service from './Service.js';
 import Dialog from 'react-dialog';
 import TableParam from './TableParam.js';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import ReactTable from 'react-table';
 
 class App extends React.Component {
@@ -23,12 +24,16 @@ class App extends React.Component {
       authType: 'DA01',
       dataHeader: [],
       name: '',
-      value: ''
+      value: '',
+      tabIndex: 0
     }
     this.urlParams = React.createRef();
     this.headerParams = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeHeader = this.handleChangeHeader.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   state = {};
@@ -48,7 +53,8 @@ class App extends React.Component {
   onSuccess = (response, responseBody) => {
 
     this.setState({
-      responseBody: JSON.stringify(JSON.parse(responseBody), null, 2)
+      responseBody: JSON.stringify(JSON.parse(responseBody), null, 2),
+      tabIndex: 1
     });
 
   }
@@ -59,6 +65,9 @@ class App extends React.Component {
       msg = ' '
     }
     alert('', msg);
+    this.setState({
+      tabIndex: 1
+    })
   }
   sendRequest = () => {
     var params = {
@@ -143,24 +152,35 @@ class App extends React.Component {
       />
     );
   };
+  handleSelect = (key) => {
+    this.setState({
+      key
+    })
+  }
   render() {
     const { dataHeader } = this.state;
     return (
       <div className="App">
-        <header className="header">
+        <header>
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="title">Welcome to Daksa Rest Client</h1>
+          <h2 className="App-title" >Daksa Rest Client</h2>
         </header>
 
         <form >
-          <Tabs>
+          <Tabs
+            selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
             <TabList>
-              <Tab>Request</Tab><Tab>Response</Tab>
+              <Tab title='Request'>
+                Request
+              </Tab>
+              <Tab title='Response'>
+                Response
+              </Tab>
             </TabList>
             <TabPanel>
               <div className="form-group">
-                <label>Url </label> <input className="ui-inputtext" value={this.state.url} onChange={this.handleChange} type="text" name="url" style={{ width: "85%" }} />
-                <button className="ui-button" type="button" onClick={this.showConnectionDialog.bind(this)}>Setup Connection</button>
+                <label>Url </label> <input className="ui-inputtext" value={this.state.url} onChange={this.handleChange} type="text" name="url" style={{ width: "75%" }} readOnly={true} />
+                <button className="ui-button" style={{ marginLeft: 10 }} type="button" onClick={this.showConnectionDialog.bind(this)}>Setup Connection</button>
                 <button className="ui-button" type="button" onClick={this.showHeaderDialog.bind(this)}>Add Header</button>
               </div>
               <div className="stacked-form">
@@ -187,14 +207,14 @@ class App extends React.Component {
                   <TableParam ref={this.urlParams} />
                 </div>
                 <div className="form-group">
-                  <label>Request </label>  <textarea className="ui-inputfield" value={this.state.data} onChange={this.handleChange} name="data" style={{ width: "95%", height: 250 }} />
-                  <button onClick={this.formatJson.bind(this)} type="button">Format Json</button>
+                  <label>Request </label>  <textarea className="ui-inputfield" value={this.state.data} onChange={this.handleChange} name="data" style={{ width: "95%", height: "85%" }} />
+                  <button className="ui-button" onClick={this.formatJson.bind(this)} type="button">Format Json</button>
                 </div>
                 <hr className="invisible-form-group-separator" />
-                <button onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
+                <button className="ui-button" style={{marginLeft:20}} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
               </div>
             </TabPanel>
-            <TabPanel >
+            <TabPanel>
               <div className="form-group">
                 <div id="tableResponseheader">
                 </div>
@@ -202,11 +222,8 @@ class App extends React.Component {
               <div className="form-group">
                 <label>Response  </label> <textarea className="ui-inputfield" value={this.state.responseBody} onChange={this.handleChange} name="responseBody" style={{ width: "95%", height: 250 }} />
               </div>
-
             </TabPanel>
-
           </Tabs>
-
         </form>
         {
           this.state.isConnectionDialog &&
@@ -294,7 +311,6 @@ class App extends React.Component {
               <div className='TableHeader'>
                 <p className='App-Intro'>
                   <form onSubmit={this.handleSubmit}>
-                    <h4>Header Parameters</h4>
                     <label>
                       Name:
                             <input type='text'
@@ -309,7 +325,7 @@ class App extends React.Component {
                         value={this.state.value}
                         onChange={this.handleChangeHeader} />
                     </label>
-                    <input type='submit' value='Add' />
+                    <button className='ui-button' onClick={this.handleSubmit} type='submit' value='Add' />
                   </form>
                 </p>
                 <div>

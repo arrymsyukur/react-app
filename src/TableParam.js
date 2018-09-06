@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactTable from 'react-table';
-import 'react-table/react-table.css'
+import 'react-table/react-table.css';
+import './assets/css/content-template-fixed-side-bar.css';
+
 
 class TableParam extends React.Component {
     constructor() {
@@ -11,6 +13,7 @@ class TableParam extends React.Component {
             value: ''
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange = (e) => {
         if (e.target.name === 'name') {
@@ -87,7 +90,7 @@ class TableParam extends React.Component {
                                 onChange={this.handleChange}
                             />
                         </label>
-                        <input type='submit' value='Add' />
+                        <button className='ui-button' onClick={this.handleSubmit} value='Add' />
                     </form>
                 </p>
                 <div>
