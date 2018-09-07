@@ -103,12 +103,31 @@ class Service {
                     console.log('Status : ', this.status);
                     let content = this.response;
                     let responseBody = this.responseText;
+                    // Get the raw header string
+                    let headers = xhttp.getAllResponseHeaders();
+
+                    // Convert the header string into an array
+                    // of individual headers
+                    var arr = headers.trim().split(/[\r\n]+/);
+
+                    // Create a map of header names to values
+                    var headerMap = {};
+                    arr.forEach(function (line) {
+                        var parts = line.split(': ');
+                        var header = parts.shift();
+                        var value = parts.join(': ');
+                        headerMap[header] = value;
+                    });
 
                     if (this.status === 200) {
                         console.log("Response", content);
                         console.log("Response Body", responseBody);
                         alert("Request Success")
-                        return onSuccess(content, responseBody)
+                        console.log("========================= RESPONSE =========================");
+                        console.log("Response Header Code", status);
+                        console.log("Headers", headers);
+                        return onSuccess(headerMap, responseBody )
+
                     }
                     else {
                         let message = content;
@@ -119,10 +138,6 @@ class Service {
 
                 }
                 let status = xhttp.statusText;
-                let headers = xhttp.getAllResponseHeaders();
-                console.log("========================= RESPONSE =========================");
-                console.log("Response Header Code", status);
-                console.log("Headers", headers);
             }
 
             xhttp.send(options.body);

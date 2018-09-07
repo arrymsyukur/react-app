@@ -50,11 +50,31 @@ class App extends React.Component {
   showHeaderDialog = () => { this.setState({ isHeaderDialog: true }) }
   closeHeaderDialog = () => { this.setState({ isHeaderDialog: false }) }
 
-  onSuccess = (response, responseBody) => {
+  onSuccess = (headerMap, responseBody) => {
+    console.log(headerMap)
+    console.log('array header : ', headerMap)
+    var responseheaderMap = [];
+
+    const stringHeaderMap = JSON.stringify(headerMap)
+
+    JSON.parse(stringHeaderMap, (key, value) => {
+      if (key !== '') {
+        var headers = {
+          'name': key,
+          'value': value
+        }
+        responseheaderMap.push(headers)
+      }
+    })
+    console.log('responseHeaderMap', responseheaderMap)
+    // headerMap.map((key) => {
+    //   responseheaderMap.push(key, headerMap[key])
+    // })
 
     this.setState({
       responseBody: JSON.stringify(JSON.parse(responseBody), null, 2),
-      tabIndex: 1
+      tabIndex: 1,
+      responseHeader: responseheaderMap
     });
 
   }
@@ -158,7 +178,7 @@ class App extends React.Component {
     })
   }
   render() {
-    const { dataHeader } = this.state;
+    const { dataHeader, responseHeader } = this.state;
     return (
       <div className="App">
         <header>
@@ -211,12 +231,27 @@ class App extends React.Component {
                   <button className="ui-button" onClick={this.formatJson.bind(this)} type="button">Format Json</button>
                 </div>
                 <hr className="invisible-form-group-separator" />
-                <button className="ui-button" style={{marginLeft:20}} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
+                <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
               </div>
             </TabPanel>
             <TabPanel>
               <div className="form-group">
                 <div id="tableResponseheader">
+                  <ReactTable
+                    data={responseHeader}
+                    defaultPageSize={5}
+
+                    columns={[
+                      {
+                        Header: 'Name',
+                        accessor: 'name'
+                      },
+                      {
+                        Header: 'Value',
+                        accessor: 'value'
+                      }
+
+                    ]} />
                 </div>
               </div>
               <div className="form-group">
