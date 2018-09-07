@@ -90,7 +90,7 @@ class TableParam extends React.Component {
                                 onChange={this.handleChange}
                             />
                         </label>
-                        <button className='ui-button' onClick={this.handleSubmit} value='Add' />
+                        <input type='submit' value='Add' />
                     </form>
                 </p>
                 <div>

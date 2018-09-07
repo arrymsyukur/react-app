@@ -325,7 +325,7 @@ class App extends React.Component {
                         value={this.state.value}
                         onChange={this.handleChangeHeader} />
                     </label>
-                    <button className='ui-button' onClick={this.handleSubmit} type='submit' value='Add' />
+                    <input  type='submit' value='Add' />
                   </form>
                 </p>
                 <div>

@@ -66,7 +66,7 @@ input, textarea, input[type="checkbox"], select {
   background: transparent;
   box-shadow: 0 1px 0 rgba(162, 205, 58, 0.24); }
   input:hover, input:focus, textarea:hover, textarea:focus, input[type="checkbox"]:hover, input[type="checkbox"]:focus, select:hover, select:focus {
-    box-shadow: 0 1px 0 #a2cd3a; }
+    box-shadow: 0 1px 0 #29ABE2; }
   input[disabled], textarea[disabled], input[type="checkbox"][disabled], select[disabled] {
     box-shadow: 0 1px 0 rgba(117, 138, 154, 0.24); }
     input[disabled]:hover, input[disabled]:focus, textarea[disabled]:hover, textarea[disabled]:focus, input[type="checkbox"][disabled]:hover, input[type="checkbox"][disabled]:focus, select[disabled]:hover, select[disabled]:focus {
