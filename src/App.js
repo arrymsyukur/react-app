@@ -101,7 +101,8 @@ class App extends React.Component {
     })
     this.setState({
       tabIndex: 1,
-      responseHeader: responseheaderMap
+      responseHeader: responseheaderMap,
+      responseBody: msg
     })
   }
   sendRequest = () => {
@@ -131,7 +132,7 @@ class App extends React.Component {
       keepAlive: true,
       method: this.state.method,
       useAuth: true,
-      data: JSON.parse(this.state.data),
+      data: JSON.stringify(JSON.parse(this.state.data)),
       canonicalPath: this.state.canonicalPath,
       baseUrl: this.state.baseUrl,
       url: this.state.baseUrl + this.state.canonicalPath,
@@ -159,13 +160,19 @@ class App extends React.Component {
       JSON.parse(event.target.result, (key, value) => {
         if (key !== '') {
           if (key === 'data') {
+            var stringJson = JSON.parse(value);
+            console.log('String Data Before : ', this.state.data)
+            console.log('String Json : ', stringJson)
             this.setState({
-              [key]: JSON.stringify(value, null, 2)
+              data: JSON.stringify(stringJson)
             })
+            console.log('Data After : ', this.state.data)
+
           } else {
             this.setState({
               [key]: value
             })
+
           }
         }
       })

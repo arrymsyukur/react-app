@@ -31,8 +31,6 @@ class Service {
 
         } else {
             headers = {
-                // 'Date': dateNow
-
             };
         }
         if (params.headerParameters.length !== 0) {
@@ -116,14 +114,14 @@ class Service {
                         console.log("========================= RESPONSE =========================");
                         console.log("Response Header Code", status);
                         console.log("Headers", headers);
-                        return onSuccess(headerMap, responseBody )
+                        return onSuccess(headerMap, responseBody)
 
                     }
                     else {
                         let message = content;
                         console.log('message error: ', message);
                         alert("Request Failed")
-                        return onFailure(content, message)
+                        return onFailure(headerMap, message)
                     }
 
                 }
@@ -136,26 +134,12 @@ class Service {
 
             xhttp.send(options.body);
         }
-        catch (e) {
+        catch (err) {
             console.log('error')
-            console.log(e);
-            return onFailure('06', e);
+            console.log(err);
+            return onFailure(null, err);
         }
     }
-
-
-    sendRequest = async (url, options) => {
-        // let response = await fetch(url, options)
-        // console.log('Response ', response)
-        // return response
-
-
-    }
-
-
-
-
-
 }
 
 export default new Service()
