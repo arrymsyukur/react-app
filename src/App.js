@@ -149,15 +149,29 @@ class App extends React.Component {
 
   }
 
-  load = (event) => {
-    // var a;
-    // var input = event.target;
-    // var fr = new FileReader();
-    // fr.onload = function () {
-    //   a = fr.result; // here is the loaded content;
-    // };
-    // fr.readAsText(input.files[0]);
-    // console.log("loaded file : ", a);
+  load = async (event) => {
+    var a;
+    var input = event.target;
+    var fr = new FileReader();
+    await fr.readAsText(input.files[0]);
+
+    fr.onload = (event) => {
+      JSON.parse(event.target.result, (key, value) => {
+        if (key !== '') {
+          if (key === 'data') {
+            this.setState({
+              [key]: JSON.stringify(value, null, 2)
+            })
+          } else {
+            this.setState({
+              [key]: value
+            })
+          }
+        }
+      })
+      alert("Finish load")
+      console.log("Hasil state : ", this.state);
+    };
   }
   formatJson = () => {
     try {
@@ -282,7 +296,7 @@ class App extends React.Component {
                 </div>
                 <hr className="invisible-form-group-separator" />
                 <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" >SAVE</button>
-                {/* <input type='file' accept='text/json' onchange={this.load.bind(this)} /> */}
+                <input type='file' accept='text/json' onChange={this.load.bind(this)} />
                 <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
               </div>
             </TabPanel>
