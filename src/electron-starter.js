@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, remote } = require('electron')
 let mainWindow
 
 function createWindow() {

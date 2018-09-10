@@ -10,6 +10,8 @@ import TableParam from './TableParam.js';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import ReactTable from 'react-table';
+import FileSaver from 'file-saver';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -25,10 +27,10 @@ class App extends React.Component {
       dataHeader: [],
       name: '',
       value: '',
-      tabIndex: 0
+      tabIndex: 0,
+      data: '{}'
     }
     this.urlParams = React.createRef();
-    this.headerParams = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeHeader = this.handleChangeHeader.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
@@ -79,14 +81,27 @@ class App extends React.Component {
 
   }
 
-  onFailure = (responseCode, message) => {
+  onFailure = (headerMap, message) => {
     var msg = message
     if (msg == null) {
       msg = ' '
     }
-    alert('', msg);
+    var responseheaderMap = [];
+
+    const stringHeaderMap = JSON.stringify(headerMap)
+
+    JSON.parse(stringHeaderMap, (key, value) => {
+      if (key !== '') {
+        var headers = {
+          'name': key,
+          'value': value
+        }
+        responseheaderMap.push(headers)
+      }
+    })
     this.setState({
-      tabIndex: 1
+      tabIndex: 1,
+      responseHeader: responseheaderMap
     })
   }
   sendRequest = () => {
@@ -108,6 +123,41 @@ class App extends React.Component {
     }
     console.log("Param : ", params);
     Service.request(this.onSuccess, this.onFailure, params);
+  }
+  save = () => {
+    var params = {
+      contentType: this.state.contentType,
+      Accept: this.state.acceptType,
+      keepAlive: true,
+      method: this.state.method,
+      useAuth: true,
+      data: JSON.parse(this.state.data),
+      canonicalPath: this.state.canonicalPath,
+      baseUrl: this.state.baseUrl,
+      url: this.state.baseUrl + this.state.canonicalPath,
+      username: this.state.username,
+      password: this.state.password,
+      authType: this.state.authType,
+      urlParameters: this.urlParams.current.getDataFromTable(),
+      headerParameters: this.getDataFromTableHeader()
+
+    }
+
+    var blob = new Blob([JSON.stringify(params, null, 2)], { type: 'text/json;charset=utf-8' });
+    FileSaver.saveAs(blob, ".json");
+
+
+  }
+
+  load = (event) => {
+    // var a;
+    // var input = event.target;
+    // var fr = new FileReader();
+    // fr.onload = function () {
+    //   a = fr.result; // here is the loaded content;
+    // };
+    // fr.readAsText(input.files[0]);
+    // console.log("loaded file : ", a);
   }
   formatJson = () => {
     try {
@@ -231,6 +281,8 @@ class App extends React.Component {
                   <button className="ui-button" onClick={this.formatJson.bind(this)} type="button">Format Json</button>
                 </div>
                 <hr className="invisible-form-group-separator" />
+                <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" >SAVE</button>
+                {/* <input type='file' accept='text/json' onchange={this.load.bind(this)} /> */}
                 <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
               </div>
             </TabPanel>
@@ -360,7 +412,7 @@ class App extends React.Component {
                         value={this.state.value}
                         onChange={this.handleChangeHeader} />
                     </label>
-                    <input  type='submit' value='Add' />
+                    <input type='submit' value='Add' />
                   </form>
                 </p>
                 <div>

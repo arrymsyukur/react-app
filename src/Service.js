@@ -1,13 +1,8 @@
-// import Constants from './Constant';
-import query from 'query-string';
 import da01 from './DA01Signature';
 var now = new Date();
 var dateFormat = require('dateformat');
 
 class Service {
-
-    constructor() {
-    }
 
     request = (onSuccess, onFailure, params) => {
         var username = params.username;
@@ -18,7 +13,7 @@ class Service {
         if (params.authType === 'DA01') {
             signature = da01.generateSignature(params.method, params.data, params.contentType, null, params.canonicalPath, params.password);
             console.log('Masuk DA01');
-            authorization = 'DA01' + ' ' + username + ':' + signature;
+            authorization = 'DA01 ' + username + ':' + signature;
             headers = {
                 'Authorization': authorization,
                 'Date': dateNow
@@ -26,7 +21,7 @@ class Service {
             console.log('DA01 : ', headers);
         } else if (params.authType === 'BASIC') {
             signature = da01.generateSignature(params.method, params.data, params.contentType, null, params.canonicalPath, params.password);
-            authorization = 'BASIC' + ' ' + username + ':' + signature;
+            authorization = 'BASIC ' + username + ':' + signature;
             headers = {
                 'Authorization': authorization,
                 'Date': dateNow
@@ -82,14 +77,9 @@ class Service {
         console.log("URL", url);
         console.log("Path", path);
         console.log("Method", options.method);
-        // console.log("Content-Type", options.headers['Content-Type']);
-        // console.log("Authorization", options.headers.Authorization);
-        // console.log("Body", JSON.parse(options.body));
         console.log("=====================END OF REQUEST =========================");
         console.log("=====================SEND REQUEST =========================");
         try {
-            let response;
-            let status;
             var xhttp = new XMLHttpRequest();
             xhttp.open(options.method, url, true);
             for (var key in options.headers) {
@@ -98,7 +88,7 @@ class Service {
             }
 
             xhttp.onload = function () {
-                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                if (xhttp.readyState === 4 && xhttp.status === 200) {
                     console.log('Response : ', this.responseText);
                     console.log('Status : ', this.status);
                     let content = this.response;
@@ -138,19 +128,13 @@ class Service {
 
                 }
                 let status = xhttp.statusText;
+                let headers = xhttp.getAllResponseHeaders();
+                console.log("========================= RESPONSE =========================");
+                console.log("Response Header Code", status);
+                console.log("Headers", headers);
             }
 
             xhttp.send(options.body);
-
-            // let map = headers.map
-            // console.log("Map", JSON.stringify('{' + map + '}'));
-
-            // let rCode = status;
-            // console.log("Response Code", rCode);
-
-            // let date = response.headers.get('date');
-            // console.log("Date", date);
-
         }
         catch (e) {
             console.log('error')

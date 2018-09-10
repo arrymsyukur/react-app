@@ -12,14 +12,14 @@ class DA01Signature {
         var dataPlain = method;
         dataPlain += "\n";
 
-        if (method == "POST" || method == "PUT") {
+        if (method === "POST" || method === "PUT") {
 
-            if (data != "") {
+            if (data !== "") {
                 var hex_md5v = md5.hex(JSON.parse(data));
                 dataPlain += hex_md5v;
                 dataPlain += "\n";
             }
-            if (contentType != "") {
+            if (contentType !== "") {
                 dataPlain += contentType;
                 dataPlain += "\n";
 
