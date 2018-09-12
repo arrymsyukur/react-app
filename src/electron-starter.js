@@ -4,7 +4,7 @@ let mainWindow
 function createWindow() {
 
     mainWindow = new BrowserWindow({ width: 1280, height: 864 })
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.loadURL('http://192.168.1.59:5000');
     var menu = Menu.buildFromTemplate([
         {
             label: 'Menu',

@@ -16,7 +16,6 @@ class Service {
             authorization = 'DA01 ' + username + ':' + signature;
             headers = {
                 'Authorization': authorization,
-                'Date': dateNow
             }
             console.log('DA01 : ', headers);
         } else if (params.authType === 'BASIC') {
@@ -24,7 +23,6 @@ class Service {
             authorization = 'BASIC ' + username + ':' + signature;
             headers = {
                 'Authorization': authorization,
-                'Date': dateNow
 
             }
             console.log('BASIC : ', headers);

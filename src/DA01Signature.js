@@ -32,7 +32,7 @@ class DA01Signature {
         return dataPlain;
     }
 
-    async generateSignature(method, data, contentType, date, canonicalPath, password) {
+    generateSignature(method, data, contentType, date, canonicalPath, password) {
         /*console.log("method", method);
         console.log("data", data);
         console.log("contentType", contentType);
