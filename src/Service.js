@@ -132,10 +132,10 @@ class Service {
 
             xhttp.send(options.body);
         }
-        catch (err) {
+        catch (e) {
             console.log('error')
-            console.log(err);
-            return onFailure(null, err);
+            console.log(e);
+            return onFailure(null, e);
         }
     }
 }
