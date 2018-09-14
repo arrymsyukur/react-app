@@ -1,17 +1,9 @@
 import da01 from './DA01Signature';
-var now = new Date();
-var dateFormat = require('dateformat');
 
 class Service {
 
     request = (onSuccess, onFailure, params) => {
         var username = params.username;
-        // var express = require('express');
-        // var cors = require('cors');
-        // var app = express();
-
-        // app.use(cors());
-        let dateNow = dateFormat(now, "ddd, d mmm yyyy HH:mm:ss Z");
         let signature;
         var authorization;
         var headers = new Headers();
@@ -28,7 +20,6 @@ class Service {
             authorization = 'BASIC ' + username + ':' + signature;
             headers = {
                 'Authorization': authorization,
-
             }
             console.log('BASIC : ', headers);
 
@@ -67,19 +58,17 @@ class Service {
                 }
                 url += urlParameters;
             }
-
             console.log("Path", path);
         }
 
         options.headers = headers;
 
-        console.log(headers)
         console.log("========================= REQUEST =========================");
+        console.log("Headers", headers);
         console.log("URL", url);
         console.log("Path", path);
         console.log("Method", options.method);
         console.log("=====================END OF REQUEST =========================");
-        console.log("=====================SEND REQUEST =========================");
         try {
             var xhttp = new XMLHttpRequest();
             xhttp.open(options.method, url, true);
@@ -94,14 +83,9 @@ class Service {
                     console.log('Status : ', this.status);
                     let content = this.response;
                     let responseBody = this.responseText;
-                    // Get the raw header string
                     let headers = xhttp.getAllResponseHeaders();
-
-                    // Convert the header string into an array
-                    // of individual headers
+                    let status = this.status;
                     var arr = headers.trim().split(/[\r\n]+/);
-
-                    // Create a map of header names to values
                     var headerMap = {};
                     arr.forEach(function (line) {
                         var parts = line.split(': ');
@@ -111,38 +95,59 @@ class Service {
                     });
 
                     if (this.status === 200) {
-                        console.log("Response", content);
-                        console.log("Response Body", responseBody);
                         alert("Request Success")
                         console.log("========================= RESPONSE =========================");
                         console.log("Response Header Code", status);
                         console.log("Headers", headers);
+                        console.log("Response", content);
                         return onSuccess(headerMap, responseBody)
 
                     }
                     else {
+                        console.log("========================= RESPONSE =========================");
+                        console.log("Response Header Code", status);
+                        console.log("Headers", headers);
+                        console.log("Response", content);
+                        alert("Request Failed")
                         let message = content;
                         console.log('message error: ', message);
                         alert("Request Failed")
                         return onFailure(headerMap, message)
                     }
 
+                } else {
+                    let headers = xhttp.getAllResponseHeaders();
+                    arr = headers.trim().split(/[\r\n]+/);
+                    headerMap = {};
+                    let responseBody = this.responseText;
+                    arr.forEach(function (line) {
+                        var parts = line.split(': ');
+                        var header = parts.shift();
+                        var value = parts.join(': ');
+                        headerMap[header] = value;
+                    });
+                    let status = xhttp.statusText;
+                    console.log("========================= RESPONSE =========================");
+                    console.log("Response Header Code", status);
+                    console.log("Headers", headers);
+                    console.log("Response", responseBody);
+                    alert("Request Failed");
+                    return onFailure(headerMap, responseBody);
                 }
-                let status = xhttp.statusText;
-                let headers = xhttp.getAllResponseHeaders();
-                console.log("========================= RESPONSE =========================");
-                console.log("Response Header Code", status);
-                console.log("Headers", headers);
             }
-
+            xhttp.onerror = function (e) {
+                alert("Request Failed");
+            }
+            console.log("=====================SEND REQUEST =========================");
             xhttp.send(options.body);
         }
         catch (e) {
-            console.log('error')
+            console.log('error', e)
             console.log(e);
             return onFailure(null, e);
         }
     }
+
 }
 
 export default new Service()

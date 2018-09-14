@@ -82,8 +82,7 @@ class App extends React.Component {
     });
 
   }
-
-  onFailure = (headerMap, message) => {
+   onFailure = (headerMap, message) => {
     var msg = message
     if (msg == null) {
       msg = ' '
