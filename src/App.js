@@ -308,15 +308,16 @@ class App extends React.Component {
                   <button className="ui-button" onClick={this.formatJson.bind(this)} type="button">Format Json</button>
                 </div>
                 <hr className="invisible-form-group-separator" />
+                <div className="form-group">
                 <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" >SAVE</button>
                 <input id="loadFile" type='file' style={{ display: 'none' }} accept='text/json' onChange={this.load.bind(this)} />
-                <label for="loadFile">Load File</label>
-                {/* <Button variant="raised"
-                  label="Open File"
-                  primary={false}
-                  onClick={() => { this.upload.click() }}
-                /> */}
-                <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
+                <button type="button" className="ui-button" style={{ marginLeft: 20 }}>
+                <label for="loadFile" style={{color:"white"}}>Load File</label>
+                </button>
+                </div>
+                <div className="form-group">
+                <button className="ui-button" style={{ marginRight: 20 }} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
+                </div>
               </div>
             </TabPanel>
             <TabPanel>
