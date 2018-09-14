@@ -82,7 +82,7 @@ class App extends React.Component {
     });
 
   }
-   onFailure = (headerMap, message) => {
+  onFailure = (headerMap, message) => {
     var msg = message
     if (msg == null) {
       msg = ' '
@@ -261,6 +261,8 @@ class App extends React.Component {
         <header>
           <img src={logo} className="App-logo" alt="logo" />
           <h2 className="App-title" >Daksa Rest Client</h2>
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
         </header>
 
         <form >
@@ -278,6 +280,7 @@ class App extends React.Component {
               <div className="form-group">
                 <label>Url </label> <input className="ui-inputtext" value={this.state.url} onChange={this.handleChange} type="text" name="url" style={{ width: "75%" }} readOnly={true} />
                 <button className="ui-button" style={{ marginLeft: 10 }} type="button" onClick={this.showConnectionDialog.bind(this)}>Setup Connection</button>
+
                 <button className="ui-button" type="button" onClick={this.showHeaderDialog.bind(this)}>Add Header</button>
               </div>
               <div className="stacked-form">
@@ -308,15 +311,15 @@ class App extends React.Component {
                   <button className="ui-button" onClick={this.formatJson.bind(this)} type="button">Format Json</button>
                 </div>
                 <hr className="invisible-form-group-separator" />
-                <div className="form-group">
-                <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" >SAVE</button>
-                <input id="loadFile" type='file' style={{ display: 'none' }} accept='text/json' onChange={this.load.bind(this)} />
-                <button type="button" className="ui-button" style={{ marginLeft: 20 }}>
-                <label for="loadFile" style={{color:"white"}}>Load File</label>
-                </button>
+                <div>
+                  <button className="ui-button-mini" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" ><i class="fas fa-save"></i> SAVE</button>
+                  <input id="loadFile" type='file' style={{ display: 'none' }} accept='text/json' onChange={this.load.bind(this)} />
+                  <button type="button" className="ui-button-mini" style={{ marginLeft: 20 }}>
+                    <label for="loadFile" style={{ color: "white" }}><i class="fas fa-folder-open"></i> LOAD</label>
+                  </button>
                 </div>
-                <div className="form-group">
-                <button className="ui-button" style={{ marginRight: 20 }} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
+                <div>
+                  <button className="ui-button-mini" style={{ marginRight: 20 }} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
                 </div>
               </div>
             </TabPanel>

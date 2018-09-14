@@ -124,7 +124,10 @@ DAKSA DESIGN REPO - SUPPORTS - COLORS
     text-transform: none; }
   .ui-button.as-if-link.ui-state-hover .ui-button-text {
     color: #29ABE2; }
-
+.ui-button-mini{
+  min-width: 10px;
+  width: 150px !important;
+}
 /* CHECKBOX */
 .ui-chkbox .ui-chkbox-box {
   width: 18px;
@@ -369,7 +372,7 @@ DAKSA DESIGN REPO - SUPPORTS - COLORS
 
 /* DIALOG */
 .ui-dialog {
-0000000000000000000000000  max-width: 1080px;
+  max-width: 1080px;
   max-height: 1080px;
   border: #29ABE2;
   border-radius: 8px;
