@@ -232,6 +232,10 @@ class App extends React.Component {
     });
     return urlParamData;
   }
+
+  openFileDialog = () => {    
+    this.refs.loadFileOpen.click();
+  }
   renderEditable = cellInfo => {
     return (
       <div
@@ -313,9 +317,9 @@ class App extends React.Component {
                 <hr className="invisible-form-group-separator" />
                 <div>
                   <button className="ui-button-mini" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" ><i class="fas fa-save"></i> SAVE</button>
-                  <input id="loadFile" type='file' style={{ display: 'none' }} accept='text/json' onChange={this.load.bind(this)} />
-                  <button type="button" className="ui-button-mini" style={{ marginLeft: 20 }}>
-                    <label for="loadFile" style={{ color: "white" }}><i class="fas fa-folder-open"></i> LOAD</label>
+                  <input id="loadFile" ref='loadFileOpen' type='file' style={{ display: 'none' }} accept='text/json' onChange={this.load.bind(this)} />
+                  <button  type="button" className="ui-button-mini" style={{ marginLeft: 20 }} onClick={this.openFileDialog.bind(this)}>
+                    <label style={{ color: "white", width:'100%', height:'100%' }}><i class="fas fa-folder-open"></i> LOAD</label>
                   </button>
                 </div>
                 <div>
