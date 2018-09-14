@@ -3,8 +3,14 @@ let mainWindow
 
 function createWindow() {
 
-    mainWindow = new BrowserWindow({ width: 1280, height: 864, webPreferences: { webSecurity: false } })
-    mainWindow.loadURL('http://192.168.1.59:5000');
+    mainWindow = new BrowserWindow({
+        width: 1280,
+        height: 864,
+        webPreferences: {
+            webSecurity: false
+        }
+    })
+    mainWindow.loadURL('http://192.168.1.51:5000');
     var menu = Menu.buildFromTemplate([
         {
             label: 'Menu',
