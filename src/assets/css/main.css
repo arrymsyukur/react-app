@@ -384,7 +384,7 @@ form {
     font-size: 13px;
     width: auto; }
 
-input, textarea, button, input[type="submit"], input[type="checkbox"], select {
+input, textarea, button, input[type="submit"], input[type="checkbox"], input[type="file"] select {
   font-family: "OrionSans", sans-serif;
   font-size: 14px;
   width: 100%;

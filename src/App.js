@@ -11,6 +11,8 @@ import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import ReactTable from 'react-table';
 import FileSaver from 'file-saver';
+// import Button from 'material-ui/Button';
+// import cors from 'cors';
 
 
 class App extends React.Component {
@@ -154,31 +156,36 @@ class App extends React.Component {
     var a;
     var input = event.target;
     var fr = new FileReader();
-    await fr.readAsText(input.files[0]);
+    try {
+      await fr.readAsText(input.files[0]);
+      fr.onload = (event) => {
+        JSON.parse(event.target.result, (key, value) => {
+          if (key !== '') {
+            if (key === 'data') {
+              var stringJson = JSON.parse(value);
+              console.log('String Data Before : ', this.state.data)
+              console.log('String Json : ', stringJson)
+              this.setState({
+                data: JSON.stringify(stringJson)
+              })
+              console.log('Data After : ', this.state.data)
 
-    fr.onload = (event) => {
-      JSON.parse(event.target.result, (key, value) => {
-        if (key !== '') {
-          if (key === 'data') {
-            var stringJson = JSON.parse(value);
-            console.log('String Data Before : ', this.state.data)
-            console.log('String Json : ', stringJson)
-            this.setState({
-              data: JSON.stringify(stringJson)
-            })
-            console.log('Data After : ', this.state.data)
+            } else {
+              this.setState({
+                [key]: value
+              })
 
-          } else {
-            this.setState({
-              [key]: value
-            })
-
+            }
           }
-        }
-      })
-      alert("Finish load")
-      console.log("Hasil state : ", this.state);
-    };
+        })
+        alert("Finish load")
+        console.log("Hasil state : ", this.state);
+      };
+    } catch (error) {
+      alert("please select a file first!")
+    }
+
+
   }
   formatJson = () => {
     try {
@@ -303,7 +310,13 @@ class App extends React.Component {
                 </div>
                 <hr className="invisible-form-group-separator" />
                 <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" >SAVE</button>
-                <input type='file' accept='text/json' onChange={this.load.bind(this)} />
+                <input id="loadFile" type='file' style={{ display: 'none' }} accept='text/json' onChange={this.load.bind(this)} />
+                <label for="loadFile">Load File</label>
+                {/* <Button variant="raised"
+                  label="Open File"
+                  primary={false}
+                  onClick={() => { this.upload.click() }}
+                /> */}
                 <button className="ui-button" style={{ marginLeft: 20 }} onClick={this.sendRequest.bind(this)} type="button" >SEND</button>
               </div>
             </TabPanel>

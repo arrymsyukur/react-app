@@ -6,6 +6,11 @@ class Service {
 
     request = (onSuccess, onFailure, params) => {
         var username = params.username;
+        // var express = require('express');
+        // var cors = require('cors');
+        // var app = express();
+
+        // app.use(cors());
         let dateNow = dateFormat(now, "ddd, d mmm yyyy HH:mm:ss Z");
         let signature;
         var authorization;
