@@ -160,6 +160,7 @@ class App extends React.Component {
 
     var blob = new Blob([JSON.stringify(params, null, 2)], { type: 'text/json;charset=utf-8' });
     FileSaver.saveAs(blob, ".json");
+    swal("Save Success", "File Has Been Successfully Saved", "success");
 
 
   }
