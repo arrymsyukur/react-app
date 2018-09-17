@@ -1,4 +1,6 @@
 import da01 from './DA01Signature';
+import swal from 'sweetalert';
+
 
 class Service {
 
@@ -95,7 +97,7 @@ class Service {
                     });
 
                     if (this.status === 200) {
-                        alert("Request Success")
+                        swal("Request Success", '', 'success');
                         console.log("========================= RESPONSE =========================");
                         console.log("Response Header Code", status);
                         console.log("Headers", headers);
@@ -108,10 +110,9 @@ class Service {
                         console.log("Response Header Code", status);
                         console.log("Headers", headers);
                         console.log("Response", content);
-                        alert("Request Failed")
+                        swal("Request Failed", '', 'error');
                         let message = content;
                         console.log('message error: ', message);
-                        alert("Request Failed")
                         return onFailure(headerMap, message)
                     }
 
@@ -131,12 +132,12 @@ class Service {
                     console.log("Response Header Code", status);
                     console.log("Headers", headers);
                     console.log("Response", responseBody);
-                    alert("Request Failed");
+                    swal("Request Failed", '', 'error');
                     return onFailure(headerMap, responseBody);
                 }
             }
             xhttp.onerror = function (e) {
-                alert("Request Failed");
+                swal("Request Failed", '', 'error');
             }
             console.log("=====================SEND REQUEST =========================");
             xhttp.send(options.body);

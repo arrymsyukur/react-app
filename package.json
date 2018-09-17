@@ -19,7 +19,8 @@
     "react-native-md5": "^1.0.0",
     "react-scripts": "1.1.5",
     "react-table": "^6.8.6",
-    "react-tabs": "^2.3.0"
+    "react-tabs": "^2.3.0",
+    "sweetalert": "^2.1.0"
   },
   "main": "src/electron-starter.js",
   "scripts": {
@@ -31,7 +32,6 @@
     "electron": "electron .",
     "electron-packager-win": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Rest-Client-App'",
     "electron-packager-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds-mac"
-        
   },
   "devDependencies": {
     "electron": "^2.0.8"

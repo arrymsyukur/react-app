@@ -2,6 +2,7 @@ import React from 'react'
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import './assets/css/content-template-fixed-side-bar.css';
+import swal from 'sweetalert';
 
 
 class TableParam extends React.Component {
@@ -29,16 +30,15 @@ class TableParam extends React.Component {
     }
     handleSubmit = (e) => {
         if (this.state.name === "" || this.state.value === "") {
-            alert('Parameter tidak boleh kosong');
+            swal('Warning', 'Please input parameters', 'warning');
         } else {
             this.state.data.push({
                 name: this.state.name,
                 value: this.state.value
             });
             this.setState({ name: "", value: "" });
-            console.log('isi array : ', this.state.data);
-            e.preventDefault();
         }
+        e.preventDefault();
 
     }
     getDataFromTable = () => {
@@ -72,7 +72,7 @@ class TableParam extends React.Component {
         const { data } = this.state;
         return (
             <div className='TableParam'>
-                <p className='App-Intro'>
+                <div className='App-Intro'>
                     <form onSubmit={this.handleSubmit}>
                         <h4>Url Parameters</h4>
                         <label>
@@ -92,7 +92,7 @@ class TableParam extends React.Component {
                         </label>
                         <input type='submit' value='Add' />
                     </form>
-                </p>
+                </div>
                 <div>
                     <ReactTable
                         data={data}

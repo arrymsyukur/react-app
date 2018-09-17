@@ -11,8 +11,7 @@ import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import ReactTable from 'react-table';
 import FileSaver from 'file-saver';
-// import Button from 'material-ui/Button';
-// import cors from 'cors';
+import swal from 'sweetalert';
 
 
 class App extends React.Component {
@@ -25,7 +24,7 @@ class App extends React.Component {
       isParamDialog: false,
       isHeaderDialog: false,
       responseHeader: [],
-      authType: 'DA01',
+      authType: 'CUSTOM',
       dataHeader: [],
       name: '',
       value: '',
@@ -48,7 +47,17 @@ class App extends React.Component {
     });
   }
   showConnectionDialog = () => { this.setState({ isConnectionDialog: true }) }
-  closeConnectionDialog = () => { this.setState({ isConnectionDialog: false, url: this.state.baseUrl + this.state.canonicalPath }) }
+  closeConnectionDialog = () => {
+    if (this.state.authType !== 'CUSTOM') {
+      if (this.state.username === undefined || this.state.password === undefined) {
+        swal("Warning", "Username and Password cannot Be Empty", "warning");
+      } else {
+        this.setState({ isConnectionDialog: false, url: this.state.baseUrl + this.state.canonicalPath });
+      }
+    } else {
+      this.setState({ isConnectionDialog: false, url: this.state.baseUrl + this.state.canonicalPath });
+    }
+  }
   showParamDialog = () => { this.setState({ isParamDialog: true }) }
   closeParamDialog = () => { this.setState({ isParamDialog: false }) }
   showHeaderDialog = () => { this.setState({ isHeaderDialog: true }) }
@@ -124,7 +133,11 @@ class App extends React.Component {
 
     }
     console.log("Param : ", params);
-    Service.request(this.onSuccess, this.onFailure, params);
+    if (this.state.url === null || this.state.url === undefined) {
+      swal("Warning", "Please Input URL First", "warning");
+    } else {
+      Service.request(this.onSuccess, this.onFailure, params);
+    }
   }
   save = () => {
     var params = {
@@ -177,11 +190,11 @@ class App extends React.Component {
             }
           }
         })
-        alert("Finish load")
+        swal("Load Success", "File Has Been Successfully Loaded", "success");
         console.log("Hasil state : ", this.state);
       };
     } catch (error) {
-      alert("please select a file first!")
+      swal("Load Failed", "Please Select File First!", "warning")
     }
 
 
@@ -192,7 +205,7 @@ class App extends React.Component {
         data: JSON.stringify(JSON.parse(this.state.data), null, 2)
       });
     } catch (error) {
-      alert("Wrong Json Format");
+      swal("Formatting Failed", "Wrong Json Format", "warning");
     }
   }
   handleChangeHeader = (e) => {
@@ -210,7 +223,7 @@ class App extends React.Component {
 
   handleSubmit = (e) => {
     if (this.state.name === "" || this.state.value === "") {
-      alert('Parameter tidak boleh kosong');
+      swal('Warning', 'Please input parameters', 'warning');
     } else {
       this.state.dataHeader.push({
         name: this.state.name,
@@ -218,8 +231,8 @@ class App extends React.Component {
       });
       this.setState({ name: "", value: "" });
       console.log('isi array : ', this.state.dataHeader);
-      e.preventDefault();
     }
+    e.preventDefault();
   }
 
   getDataFromTableHeader = () => {
@@ -233,7 +246,7 @@ class App extends React.Component {
     return urlParamData;
   }
 
-  openFileDialog = () => {    
+  openFileDialog = () => {
     this.refs.loadFileOpen.click();
   }
   renderEditable = cellInfo => {
@@ -264,9 +277,9 @@ class App extends React.Component {
       <div className="App">
         <header>
           <img src={logo} className="App-logo" alt="logo" />
-          <h2 className="App-title" >Daksa Rest Client</h2>
+          <h4 className="App-title" >Daksa Rest Client</h4>
 
-          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossOrigin="anonymous" />
         </header>
 
         <form >
@@ -316,10 +329,10 @@ class App extends React.Component {
                 </div>
                 <hr className="invisible-form-group-separator" />
                 <div>
-                  <button className="ui-button-mini" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" ><i class="fas fa-save"></i> SAVE</button>
+                  <button className="ui-button-mini" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" ><i className="fas fa-save"></i> SAVE</button>
                   <input id="loadFile" ref='loadFileOpen' type='file' style={{ display: 'none' }} accept='text/json' onChange={this.load.bind(this)} />
-                  <button  type="button" className="ui-button-mini" style={{ marginLeft: 20 }} onClick={this.openFileDialog.bind(this)}>
-                    <label style={{ color: "white", width:'100%', height:'100%' }}><i class="fas fa-folder-open"></i> LOAD</label>
+                  <button type="button" className="ui-button-mini" style={{ marginLeft: 20 }} onClick={this.openFileDialog.bind(this)}>
+                    <label style={{ color: "white", width: '100%', height: '100%' }}><i className="fas fa-folder-open"></i> LOAD</label>
                   </button>
                 </div>
                 <div>
@@ -423,12 +436,11 @@ class App extends React.Component {
         }{
           this.state.isHeaderDialog &&
           <Dialog
-            title="Add Header Parameters"
             modal={true}
-            width={750}
-            height={500}
+            width={800}
+            height={430}
             isDraggable={true}
-            buttons={
+            buttons={ 
               [{
                 text: "Close",
                 onClick: () => this.closeHeaderDialog()
@@ -437,9 +449,10 @@ class App extends React.Component {
             }>
             <div>
               <div className='TableHeader'>
-                <p className='App-Intro'>
+                <div className='App-Intro'>
                   <form onSubmit={this.handleSubmit}>
-                    <label>
+                    <h4 style={{ marginLeft: 20 }}>Header Parameters</h4>
+                    <label style={{ marginLeft: 20 }}>
                       Name:
                             <input type='text'
                         name='name'
@@ -455,7 +468,7 @@ class App extends React.Component {
                     </label>
                     <input type='submit' value='Add' />
                   </form>
-                </p>
+                </div>
                 <div>
                   <ReactTable
                     data={dataHeader}
