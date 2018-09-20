@@ -29,9 +29,8 @@ class App extends React.Component {
       name: '',
       value: '',
       tabIndex: 0,
-      data: '{}'
     }
-    this.urlParams = React.createRef();
+    this.requestParam = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeHeader = this.handleChangeHeader.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
@@ -80,12 +79,15 @@ class App extends React.Component {
       }
     })
     console.log('responseHeaderMap', responseheaderMap)
-    // headerMap.map((key) => {
-    //   responseheaderMap.push(key, headerMap[key])
-    // })
+    var body;
+    try {
+      body = JSON.stringify(JSON.parse(responseBody), null, 2);
+    } catch (error) {
+      body = responseBody;
+    }
 
     this.setState({
-      responseBody: JSON.stringify(JSON.parse(responseBody), null, 2),
+      responseBody: body,
       tabIndex: 1,
       responseHeader: responseheaderMap
     });
@@ -140,33 +142,46 @@ class App extends React.Component {
     }
   }
   save = () => {
+    //Set Url and Header Parameters
+    var urlParameters = this.requestParam.current.getDataFromTable();
+    var headerParameters = this.getDataFromTableHeader()
+
+    var requestParam = {};
+    var requestheader = {};
+    for (var i in urlParameters) {
+      requestParam[i] = urlParameters[i]
+    }
+    for (var x in headerParameters) {
+      requestheader[x] = headerParameters[x]
+    }
     var params = {
-      contentType: this.state.contentType,
-      Accept: this.state.acceptType,
-      keepAlive: true,
-      method: this.state.method,
-      useAuth: true,
-      data: JSON.stringify(JSON.parse(this.state.data)),
-      canonicalPath: this.state.canonicalPath,
-      baseUrl: this.state.baseUrl,
       url: this.state.baseUrl + this.state.canonicalPath,
-      username: this.state.username,
-      password: this.state.password,
-      authType: this.state.authType,
-      urlParameters: this.urlParams.current.getDataFromTable(),
-      headerParameters: this.getDataFromTableHeader()
+      contentType: this.state.contentType,
+      httpMethod: this.state.httpMethod,
+      acceptContentType: this.state.acceptContentType,
+      requestContent: this.state.requestContent,
+      requestParam: requestParam,
+      requestheader: requestheader,
+      serviceConnection: {
+        mainConnection: {
+          baseUrl: this.state.baseUrl,
+          username: this.state.username,
+          password: this.state.password
+        },
+        canonicalPath: this.state.canonicalPath,
+        authType: this.state.authType
+      },
 
     }
 
     var blob = new Blob([JSON.stringify(params, null, 2)], { type: 'text/json;charset=utf-8' });
     FileSaver.saveAs(blob, ".json");
-    swal("Save Success", "File Has Been Successfully Saved", "success");
+    // swal("Save Success", "File Has Been Successfully Saved", "success");
 
 
   }
 
   load = async (event) => {
-    var a;
     var input = event.target;
     var fr = new FileReader();
     try {
@@ -176,8 +191,6 @@ class App extends React.Component {
           if (key !== '') {
             if (key === 'data') {
               var stringJson = JSON.parse(value);
-              console.log('String Data Before : ', this.state.data)
-              console.log('String Json : ', stringJson)
               this.setState({
                 data: JSON.stringify(stringJson)
               })
@@ -203,7 +216,7 @@ class App extends React.Component {
   formatJson = () => {
     try {
       this.setState({
-        data: JSON.stringify(JSON.parse(this.state.data), null, 2)
+        data: JSON.stringify(JSON.parse(this.state.requestContent), null, 2)
       });
     } catch (error) {
       swal("Formatting Failed", "Wrong Json Format", "warning");
@@ -237,14 +250,14 @@ class App extends React.Component {
   }
 
   getDataFromTableHeader = () => {
-    var urlParamData = [];
+    var headerParamData = [];
     this.state.dataHeader.map((obj) => {
       if (obj.name !== "" || obj.value !== "") {
-        urlParamData.push(obj);
+        headerParamData.push(obj);
       }
-      console.log("Data yg dikirim : ", urlParamData);
+      console.log("Data yg dikirim : ", headerParamData);
     });
-    return urlParamData;
+    return headerParamData;
   }
 
   openFileDialog = () => {
@@ -285,6 +298,7 @@ class App extends React.Component {
 
         <form >
           <Tabs
+            forceRenderTabPanel={true}
             selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
             <TabList>
               <Tab title='Request'>
@@ -296,7 +310,12 @@ class App extends React.Component {
             </TabList>
             <TabPanel>
               <div className="form-group">
-                <label>Url </label> <input className="ui-inputtext" value={this.state.url} onChange={this.handleChange} type="text" name="url" style={{ width: "75%" }} readOnly={true} />
+                <label>Url </label>
+                <input className="ui-inputtext"
+                  value={this.state.url}
+                  onChange={this.handleChange}
+                  type="text" name="url" style={{ width: "75%" }}
+                  readOnly={true} />
                 <button className="ui-button" style={{ marginLeft: 10 }} type="button" onClick={this.showConnectionDialog.bind(this)}>Setup Connection</button>
 
                 <button className="ui-button" type="button" onClick={this.showHeaderDialog.bind(this)}>Add Header</button>
@@ -304,14 +323,14 @@ class App extends React.Component {
               <div className="stacked-form">
                 <div className="form-group">
                   <label id="icon-content" >Method</label>
-                  <select id="method" name="method" value={this.state.method} onChange={this.handleChange} style={{ margin_left: 32 }}>
+                  <select id="method" name="httpMethod" value={this.state.method} onChange={this.handleChange} style={{ margin_left: 32 }}>
                     <option value="POST">POST</option>
                     <option value="GET">GET</option>
                     <option value="PUT">PUT</option>
                     <option value="DELETE">DELETE</option>
                   </select><br></br>
                   <label>Accept Type </label>
-                  <input type="text" name="acceptType" onChange={this.handleChange} style={{ width: "50%" }} />
+                  <input type="text" name="acceptContentType" onChange={this.handleChange} style={{ width: "50%" }} />
                 </div>
                 <div className="form-group">
                   <label id="icon-content">Content-Type</label>
@@ -322,15 +341,23 @@ class App extends React.Component {
                   </select>
                 </div>
                 <div className="form-group">
-                  <TableParam ref={this.urlParams} />
+                  <TableParam ref={this.requestParam} />
                 </div>
                 <div className="form-group">
-                  <label>Request </label>  <textarea className="ui-inputfield" value={this.state.data} onChange={this.handleChange} name="data" style={{ width: "95%", height: "85%" }} />
+                  <label>Request </label>  <textarea className="ui-inputfield"
+                    value={this.state.requestContent}
+                    onChange={this.handleChange}
+                    name="requestContent"
+                    style={{ width: "95%", height: "85%" }} />
                   <button className="ui-button" onClick={this.formatJson.bind(this)} type="button">Format Json</button>
                 </div>
                 <hr className="invisible-form-group-separator" />
                 <div>
-                  <button className="ui-button-mini" style={{ marginLeft: 20 }} onClick={this.save.bind(this)} type="button" ><i className="fas fa-save"></i> SAVE</button>
+                  <button className="ui-button-mini"
+                    style={{ marginLeft: 20 }}
+                    onClick={this.save.bind(this)}
+                    type="button" >
+                    <i className="fas fa-save"></i> SAVE</button>
                   <input id="loadFile" ref='loadFileOpen' type='file' style={{ display: 'none' }} accept='text/json' onChange={this.load.bind(this)} />
                   <button type="button" className="ui-button-mini" style={{ marginLeft: 20 }} onClick={this.openFileDialog.bind(this)}>
                     <label style={{ color: "white", width: '100%', height: '100%' }}><i className="fas fa-folder-open"></i> LOAD</label>
@@ -362,7 +389,12 @@ class App extends React.Component {
                 </div>
               </div>
               <div className="form-group">
-                <label>Response  </label> <textarea className="ui-inputfield" value={this.state.responseBody} onChange={this.handleChange} name="responseBody" style={{ width: "95%", height: 250 }} />
+                <label>Response  </label> <textarea className="ui-inputfield"
+                  value={this.state.responseBody}
+                  onChange={this.handleChange}
+                  readOnly={true}
+                  name="responseBody"
+                  style={{ width: "95%", height: 250 }} />
               </div>
             </TabPanel>
           </Tabs>
@@ -385,7 +417,10 @@ class App extends React.Component {
             }>
             <div className="form-group">
               <label>Base URL :</label>
-              <input type="text" name="baseUrl" value={this.state.baseUrl} onChange={this.handleChange} style={{ width: "100%" }} />
+              <input type="text" name="baseUrl"
+                value={this.state.baseUrl}
+                onChange={this.handleChange}
+                style={{ width: "100%" }} />
             </div>
             <div className="form-group">
               <label>Canonical Path :</label>
@@ -441,7 +476,7 @@ class App extends React.Component {
             width={800}
             height={430}
             isDraggable={true}
-            buttons={ 
+            buttons={
               [{
                 text: "Close",
                 onClick: () => this.closeHeaderDialog()
