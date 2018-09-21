@@ -35,6 +35,7 @@ class App extends React.Component {
     this.handleChangeHeader = this.handleChangeHeader.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setLoadedHeader = this.setLoadedHeader.bind(this);
 
   }
 
@@ -206,6 +207,9 @@ class App extends React.Component {
         if (this.state.requestParam !== null) {
           this.requestParam.current.setLoadedParam(this.state.requestParam);
         }
+        if (this.state.requestheader !== null) {
+          this.setLoadedHeader(this.state.requestheader);
+        }
         swal("Load Success", "File Has Been Successfully Loaded", "success");
         console.log("Hasil state : ", JSON.stringify(this.state, null, 2));
       };
@@ -261,7 +265,18 @@ class App extends React.Component {
     });
     return headerParamData;
   }
-
+  setLoadedHeader = (param) => {
+    this.setState({
+      dataHeader: []
+    })
+    for (var key in param) {
+      this.state.dataHeader.push({
+        name: key,
+        value: param[key]
+      });
+    }
+    console.log('Data Loaded', this.state.data);
+  }
   openFileDialog = () => {
     this.refs.loadFileOpen.click();
   }
@@ -325,14 +340,14 @@ class App extends React.Component {
               <div className="stacked-form">
                 <div className="form-group">
                   <label id="icon-content" >Method</label>
-                  <select id="method" name="httpMethod" value={this.state.method} onChange={this.handleChange} style={{ margin_left: 32 }}>
+                  <select id="method" name="httpMethod" value={this.state.httpMethod} onChange={this.handleChange} style={{ margin_left: 32 }}>
                     <option value="POST">POST</option>
                     <option value="GET">GET</option>
                     <option value="PUT">PUT</option>
                     <option value="DELETE">DELETE</option>
                   </select><br></br>
                   <label>Accept Type </label>
-                  <input type="text" name="acceptContentType" onChange={this.handleChange} style={{ width: "50%" }} />
+                  <input type="text" name="acceptContentType" value={this.state.acceptContentType} onChange={this.handleChange} style={{ width: "50%" }} />
                 </div>
                 <div className="form-group">
                   <label id="icon-content">Content-Type</label>

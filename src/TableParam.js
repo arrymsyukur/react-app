@@ -42,12 +42,14 @@ class TableParam extends React.Component {
 
     }
     setLoadedParam = (param) => {
+        this.setState({
+            data: []
+        })
         for (var key in param) {
-            var obj = {
+            this.state.data.push({
                 name: key,
                 value: param[key]
-            }
-            this.state.data.push(obj);
+            });
         }
         console.log('Data Loaded', this.state.data);
     }
