@@ -41,6 +41,16 @@ class TableParam extends React.Component {
         e.preventDefault();
 
     }
+    setLoadedParam = (param) => {
+        for (var key in param) {
+            var obj = {
+                name: key,
+                value: param[key]
+            }
+            this.state.data.push(obj);
+        }
+        console.log('Data Loaded', this.state.data);
+    }
     getDataFromTable = () => {
         var urlParamData = [];
         this.state.data.map((obj) => {

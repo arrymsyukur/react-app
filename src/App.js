@@ -187,25 +187,27 @@ class App extends React.Component {
     try {
       await fr.readAsText(input.files[0]);
       fr.onload = (event) => {
-        JSON.parse(event.target.result, (key, value) => {
-          if (key !== '') {
-            if (key === 'data') {
-              var stringJson = JSON.parse(value);
-              this.setState({
-                data: JSON.stringify(stringJson)
-              })
-              console.log('Data After : ', this.state.data)
+        var loadedFile = JSON.parse(event.target.result);
+        this.setState({
+          url: loadedFile.url,
+          contentType: loadedFile.contentType,
+          httpMethod: loadedFile.httpMethod,
+          acceptContentType: loadedFile.acceptContentType,
+          requestContent: loadedFile.requestContent,
+          requestParam: loadedFile.requestParam,
+          requestheader: loadedFile.requestheader,
+          baseUrl: loadedFile.serviceConnection.mainConnection.baseUrl,
+          username: loadedFile.serviceConnection.mainConnection.username,
+          password: loadedFile.serviceConnection.mainConnection.password,
+          canonicalPath: loadedFile.serviceConnection.canonicalPath,
+          authType: loadedFile.serviceConnection.authType
 
-            } else {
-              this.setState({
-                [key]: value
-              })
-
-            }
-          }
         })
+        if (this.state.requestParam !== null) {
+          this.requestParam.current.setLoadedParam(this.state.requestParam);
+        }
         swal("Load Success", "File Has Been Successfully Loaded", "success");
-        console.log("Hasil state : ", this.state);
+        console.log("Hasil state : ", JSON.stringify(this.state, null, 2));
       };
     } catch (error) {
       swal("Load Failed", "Please Select File First!", "warning")

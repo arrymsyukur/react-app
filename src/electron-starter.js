@@ -20,8 +20,9 @@ function createWindow() {
                 {
                     label: 'Create New Rest',
                     click() {
-                        let win = new BrowserWindow({ width: 1280, height: 864, webPreferences :{webSecurity: false} })
+                        let win = new BrowserWindow({ width: 1280, height: 864, webPreferences: { webSecurity: false } })
                         win.on('close', function () { win = null })
+                        // mainWindow.loadURL('http://192.168.1.59:5000');
                         win.loadURL('http://localhost:3000')
                         win.show()
                     }
