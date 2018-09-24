@@ -123,7 +123,7 @@ class App extends React.Component {
       contentType: this.state.contentType,
       Accept: this.state.acceptType,
       keepAlive: true,
-      method: this.state.method,
+      method: this.state.httpMethod,
       useAuth: true,
       data: JSON.stringify(this.state.data),
       canonicalPath: this.state.canonicalPath,
@@ -131,7 +131,7 @@ class App extends React.Component {
       username: this.state.username,
       password: this.state.password,
       authType: this.state.authType,
-      urlParameters: this.urlParams.current.getDataFromTable(),
+      urlParameters: this.requestParam.current.getDataFromTable(),
       headerParameters: this.getDataFromTableHeader()
 
     }

@@ -11,7 +11,6 @@ class Service {
         var headers = new Headers();
         if (params.authType === 'DA01') {
             signature = da01.generateSignature(params.method, params.data, params.contentType, null, params.canonicalPath, params.password);
-            console.log('Masuk DA01');
             authorization = 'DA01 ' + username + ':' + signature;
             headers = {
                 'Authorization': authorization,
@@ -50,7 +49,6 @@ class Service {
         } else {
             if (params.urlParameters.length !== 0) {
                 var urlParameters;
-                console.log('masuk ke parameter')
                 for (var i = 0; i < params.urlParameters.length; i++) {
                     if (i === 0) {
                         urlParameters = "?" + params.urlParameters[i].name + "=" + params.urlParameters[i].value;
@@ -137,7 +135,7 @@ class Service {
                 }
             }
             xhttp.onerror = function (e) {
-                swal("Request Failed", '', 'error');
+                swal("Request Failed", xhttp.statusText, 'error');
             }
             console.log("=====================SEND REQUEST =========================");
             xhttp.send(options.body);

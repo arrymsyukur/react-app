@@ -4,7 +4,6 @@
 
 var md5 = require('js-md5');
 var CryptoJS = require("crypto-js");
-// import Constants from './Constant'
 
 class DA01Signature {
 
@@ -14,7 +13,7 @@ class DA01Signature {
 
         if (method === "POST" || method === "PUT") {
 
-            if (data !== "") {
+            if (data !== "" && data !== undefined) {
                 var hex_md5v = md5.hex(JSON.parse(data));
                 dataPlain += hex_md5v;
                 dataPlain += "\n";
@@ -33,20 +32,11 @@ class DA01Signature {
     }
 
     generateSignature(method, data, contentType, date, canonicalPath, password) {
-        /*console.log("method", method);
-        console.log("data", data);
-        console.log("contentType", contentType);
-        console.log("date", date);
-        console.log("canonicalPath", canonicalPath);*/
 
         var string_to_sign = this.getString(method, data, contentType, date, canonicalPath);
         console.log("contenttttt", string_to_sign);
         let hash = CryptoJS.HmacSHA1(string_to_sign, password);
-        // console.log("hash = ", hash.toString());        
-        // console.log(hash.toString(CryptoJS.enc.Base64));
         let result = CryptoJS.enc.Base64.stringify(hash);
-        // console.log('RESULT ', result);
-
         return result;
     }
 
