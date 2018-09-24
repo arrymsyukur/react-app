@@ -146,14 +146,13 @@ class App extends React.Component {
     //Set Url and Header Parameters
     var urlParameters = this.requestParam.current.getDataFromTable();
     var headerParameters = this.getDataFromTableHeader()
-
     var requestParam = {};
     var requestheader = {};
-    for (var i in urlParameters) {
-      requestParam[i] = urlParameters[i]
+    for (var i = 0; i < urlParameters.length; i++) {
+      requestParam[urlParameters[i].name] = urlParameters[i].value;
     }
-    for (var x in headerParameters) {
-      requestheader[x] = headerParameters[x]
+    for (var i = 0; i < headerParameters.length; i++) {
+      requestheader[headerParameters[i].name] = headerParameters[i].value;
     }
     var params = {
       url: this.state.baseUrl + this.state.canonicalPath,
